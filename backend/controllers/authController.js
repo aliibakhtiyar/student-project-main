@@ -29,6 +29,7 @@ const generateToken = (userId) => {
 // REGISTER + SEND EMAIL OTP
 // ===============================
 
+
 const register = async (req, res) => {
   try {
     const {
@@ -41,6 +42,7 @@ const register = async (req, res) => {
       semester,
     } = req.body;
 
+    // 1. Validate required fields
     if (!name || !email || !password || !institute) {
       return res.status(400).json({
         success: false,
@@ -51,7 +53,7 @@ const register = async (req, res) => {
     const normalizedEmail = email.toLowerCase().trim();
     const normalizedName = name.trim();
 
-    // Find selected institute
+    // 2. Validate selected institute
     const selectedInstitute = institutes.find(
       (item) => item.id === institute
     );
@@ -63,7 +65,7 @@ const register = async (req, res) => {
       });
     }
 
-    // Validate college email domain
+    // 3. Validate college email domain
     const emailParts = normalizedEmail.split("@");
 
     if (emailParts.length !== 2) {
@@ -86,28 +88,87 @@ const register = async (req, res) => {
       });
     }
 
-    // Check existing account
+    // 4. Check existing account
     const existingUser = await User.findOne({
       email: normalizedEmail,
-    });
+    }).select("+otp +otpExpiresAt +otpAttempts");
 
     if (existingUser) {
-      return res.status(409).json({
-        success: false,
-        message: existingUser.isEmailVerified
-          ? "Email already registered. Please login."
-          : "An account already exists for this email. Use the resend OTP flow or remove the test account before registering again.",
+      // Already verified: do not register again
+      if (existingUser.isEmailVerified) {
+        return res.status(409).json({
+          success: false,
+          message: "Email already registered. Please login.",
+        });
+      }
+
+      // Existing unverified account: generate a fresh OTP
+      const otp = generateOTP();
+
+      existingUser.otp = otp;
+      existingUser.otpExpiresAt = new Date(
+        Date.now() + 10 * 60 * 1000
+      );
+      existingUser.otpAttempts = 0;
+
+      await existingUser.save();
+
+      // Send OTP email
+      try {
+        if (
+          !process.env.SMTP_USER ||
+          !process.env.SMTP_PASSWORD
+        ) {
+          throw new Error(
+            "SMTP_USER or SMTP_PASSWORD is missing"
+          );
+        }
+
+        await transporter.sendMail({
+          from: {
+            name: "UniSphere",
+            address:
+              process.env.SMTP_FROM || process.env.SMTP_USER,
+          },
+          to: normalizedEmail,
+          subject: "UniSphere - Email Verification OTP",
+          text: `Hello ${normalizedName},
+
+Your UniSphere verification OTP is ${otp}.
+
+This OTP expires in 10 minutes.
+
+If you did not request this, please ignore this email.`,
+        });
+      } catch (emailError) {
+        console.error("OTP resend failed:", emailError);
+
+        return res.status(502).json({
+          success: false,
+          message:
+            "Could not send OTP email. Please check SMTP settings.",
+        });
+      }
+
+      console.log(`OTP email sent to ${normalizedEmail}`);
+
+      return res.status(200).json({
+        success: true,
+        message: "OTP sent again to your email.",
+        userId: existingUser._id,
       });
     }
 
-    // Hash password
+    // 5. Hash password for a new account
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    // Generate OTP
+    // 6. Generate OTP
     const otp = generateOTP();
-    const otpExpiresAt = new Date(Date.now() + 10 * 60 * 1000);
+    const otpExpiresAt = new Date(
+      Date.now() + 10 * 60 * 1000
+    );
 
-    // Create unverified user
+    // 7. Create new unverified user
     const user = await User.create({
       name: normalizedName,
       email: normalizedEmail,
@@ -124,16 +185,22 @@ const register = async (req, res) => {
       otpAttempts: 0,
     });
 
-    // Send OTP email
+    // 8. Send OTP email
     try {
-      if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
-        throw new Error("SMTP_USER or SMTP_PASSWORD is missing in .env");
+      if (
+        !process.env.SMTP_USER ||
+        !process.env.SMTP_PASSWORD
+      ) {
+        throw new Error(
+          "SMTP_USER or SMTP_PASSWORD is missing"
+        );
       }
 
       await transporter.sendMail({
         from: {
           name: "UniSphere",
-          address: process.env.SMTP_FROM || process.env.SMTP_USER,
+          address:
+            process.env.SMTP_FROM || process.env.SMTP_USER,
         },
         to: normalizedEmail,
         subject: "UniSphere - Email Verification OTP",
@@ -144,49 +211,45 @@ Your UniSphere verification OTP is ${otp}.
 This OTP expires in 10 minutes.
 
 If you did not request this, please ignore this email.`,
-        html: `
-          <div style="font-family:Arial,sans-serif;max-width:500px;margin:auto;padding:24px;border:1px solid #ddd;border-radius:12px">
-            <h2 style="color:#4f46e5">Welcome to UniSphere!</h2>
-            <p>Hello ${normalizedName.replace(/[&<>"']/g, "")},</p>
-            <p>Use this OTP to verify your college email:</p>
-            <h1 style="letter-spacing:8px;color:#4f46e5">${otp}</h1>
-            <p>This OTP expires in <strong>10 minutes</strong>.</p>
-            <p>If you did not request this, please ignore this email.</p>
-          </div>
-        `,
       });
     } catch (emailError) {
       console.error("OTP email sending failed:", emailError);
 
-      // Remove the unverified account so registration can be retried
-      await User.deleteOne({ _id: user._id }).catch((deleteError) => {
-        console.error("Failed to clean up unverified user:", deleteError);
-      });
+      // Remove the newly created account if email delivery fails
+      await User.deleteOne({ _id: user._id }).catch(
+        (deleteError) => {
+          console.error(
+            "Failed to clean up unverified user:",
+            deleteError
+          );
+        }
+      );
 
       return res.status(502).json({
         success: false,
-        message: "Could not send OTP email. Check SMTP settings and backend logs, then try again.",
+        message:
+          "Could not send OTP email. Check SMTP settings and try again.",
       });
     }
 
     console.log(`OTP email sent to ${normalizedEmail}`);
 
+    // 9. Success: frontend can navigate to OTP page
     return res.status(201).json({
       success: true,
       message: "Registration successful. OTP sent to your email.",
       userId: user._id,
-      // Development testing only. Never expose OTP in production.
-      ...(process.env.NODE_ENV === "development" ? { otp } : {}),
     });
   } catch (error) {
     console.error("Register Error:", error);
 
     return res.status(500).json({
       success: false,
-      message: "Registration failed. Check the backend logs.",
+      message: "Registration failed. Check backend logs.",
     });
   }
 };
+
 
 // ===============================
 // VERIFY OTP

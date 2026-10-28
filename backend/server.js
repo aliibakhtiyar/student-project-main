@@ -38,13 +38,19 @@ app.use(
 // Middleware
 // ===============================
 
+
+const allowedOrigins = [
+  "https://student-project-main-1.onrender.com",
+];
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "https://student-project-main-1.onrender.com",
+    origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
 app.use(
   "/api/classroom",
   classroomRoutes
