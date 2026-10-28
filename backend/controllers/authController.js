@@ -30,6 +30,7 @@ const generateToken = (userId) => {
 // ===============================
 
 
+
 const register = async (req, res) => {
   try {
     const {
@@ -94,7 +95,7 @@ const register = async (req, res) => {
     }).select("+otp +otpExpiresAt +otpAttempts");
 
     if (existingUser) {
-      // Already verified: do not register again
+      // Already verified
       if (existingUser.isEmailVerified) {
         return res.status(409).json({
           success: false,
@@ -102,7 +103,7 @@ const register = async (req, res) => {
         });
       }
 
-      // Existing unverified account: generate a fresh OTP
+      // Generate fresh OTP for unverified account
       const otp = generateOTP();
 
       existingUser.otp = otp;
@@ -113,22 +114,12 @@ const register = async (req, res) => {
 
       await existingUser.save();
 
-      // Send OTP email
+      // Send OTP using Resend through config/mailer.js
       try {
-        if (
-          !process.env.SMTP_USER ||
-          !process.env.SMTP_PASSWORD
-        ) {
-          throw new Error(
-            "SMTP_USER or SMTP_PASSWORD is missing"
-          );
-        }
-
         await transporter.sendMail({
           from: {
             name: "UniSphere",
-            address:
-              process.env.SMTP_FROM || process.env.SMTP_USER,
+            address: "onboarding@resend.dev",
           },
           to: normalizedEmail,
           subject: "UniSphere - Email Verification OTP",
@@ -145,8 +136,7 @@ If you did not request this, please ignore this email.`,
 
         return res.status(502).json({
           success: false,
-          message:
-            "Could not send OTP email. Please check SMTP settings.",
+          message: "Could not send OTP email. Please check email configuration.",
         });
       }
 
@@ -159,7 +149,7 @@ If you did not request this, please ignore this email.`,
       });
     }
 
-    // 5. Hash password for a new account
+    // 5. Hash password
     const hashedPassword = await bcrypt.hash(password, 12);
 
     // 6. Generate OTP
@@ -185,22 +175,12 @@ If you did not request this, please ignore this email.`,
       otpAttempts: 0,
     });
 
-    // 8. Send OTP email
+    // 8. Send OTP using Resend
     try {
-      if (
-        !process.env.SMTP_USER ||
-        !process.env.SMTP_PASSWORD
-      ) {
-        throw new Error(
-          "SMTP_USER or SMTP_PASSWORD is missing"
-        );
-      }
-
       await transporter.sendMail({
         from: {
           name: "UniSphere",
-          address:
-            process.env.SMTP_FROM || process.env.SMTP_USER,
+          address: "onboarding@resend.dev",
         },
         to: normalizedEmail,
         subject: "UniSphere - Email Verification OTP",
@@ -215,7 +195,7 @@ If you did not request this, please ignore this email.`,
     } catch (emailError) {
       console.error("OTP email sending failed:", emailError);
 
-      // Remove the newly created account if email delivery fails
+      // Remove new user if email sending fails
       await User.deleteOne({ _id: user._id }).catch(
         (deleteError) => {
           console.error(
@@ -227,14 +207,13 @@ If you did not request this, please ignore this email.`,
 
       return res.status(502).json({
         success: false,
-        message:
-          "Could not send OTP email. Check SMTP settings and try again.",
+        message: "Could not send OTP email. Please check email configuration.",
       });
     }
 
     console.log(`OTP email sent to ${normalizedEmail}`);
 
-    // 9. Success: frontend can navigate to OTP page
+    // 9. Registration success
     return res.status(201).json({
       success: true,
       message: "Registration successful. OTP sent to your email.",
