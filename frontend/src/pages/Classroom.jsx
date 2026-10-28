@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { BookOpen, RefreshCw, Plus, Users, ClipboardList } from "lucide-react";
 import UpcomingAssignments from "../components/UpcomingAssignments";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://student-project-main.onrender.com";
 
 const Classroom = () => {
   const [courses, setCourses] = useState([]);

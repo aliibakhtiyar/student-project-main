@@ -15,7 +15,7 @@ import {
   RefreshCw,
 } from "lucide-react";
 
-const API = "http://localhost:5000/api";
+const API = "https://student-project-main.onrender.com/api";
 
 // ============================================================
 // SMALL COMPONENTS
