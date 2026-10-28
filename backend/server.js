@@ -40,7 +40,7 @@ app.use(
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "https://student-project-main.onrender.com",
+    origin: process.env.CLIENT_URL || "https://student-project-main-1.onrender.com",
     credentials: true,
   })
 );
