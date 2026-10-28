@@ -190,7 +190,7 @@ const classroomCallback = async (
 
     if (!code) {
       return res.redirect(
-        "http://localhost:5173/classroom?error=no_code"
+        "https://student-project-main.onrender.com?error=no_code"
       );
     }
 
@@ -214,7 +214,7 @@ const classroomCallback = async (
 
     // Redirect frontend
     return res.redirect(
-      "http://localhost:5173/classroom"
+      "https://student-project-main.onrender.com"
     );
 
   } catch (error) {
@@ -228,7 +228,7 @@ const classroomCallback = async (
     );
 
     return res.redirect(
-      "http://localhost:5173/classroom?error=google_auth_failed"
+      "https://student-project-main.onrender.com?error=google_auth_failed"
     );
   }
 };
