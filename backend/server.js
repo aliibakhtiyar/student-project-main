@@ -20,6 +20,7 @@ const opportunityRoutes = require(
   "./routes/opportunityRoutes"
 );
 
+
 const app = express();
 
 // ===============================
@@ -60,6 +61,8 @@ app.use(
   "/api/linkedin",
   linkedinRoutes
 );
+app.use("/api/resume", require("./routes/resumeRoutes"));
+app.use("/api/quiz", require("./routes/quizRoutes"));
 app.use(
   express.urlencoded({
     extended: true,

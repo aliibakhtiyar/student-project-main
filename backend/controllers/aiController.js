@@ -1,4 +1,5 @@
-const client = require("../config/omniRoute");
+
+const client = require("../config/groq");
 
 const SYSTEM_PROMPT = `
 You are UniSphere AI, the personal AI assistant for students.
@@ -45,10 +46,7 @@ Rules:
 
 const chatWithAI = async (req, res) => {
   try {
-    const {
-      message,
-      conversation = [],
-    } = req.body;
+    const { message, conversation = [] } = req.body;
 
     if (
       !message ||
@@ -61,22 +59,19 @@ const chatWithAI = async (req, res) => {
       });
     }
 
-    if (!process.env.OMNIROUTE_API_KEY) {
+    if (!process.env.GROQ_API_KEY) {
       return res.status(500).json({
         success: false,
-        message: "OMNIROUTE_API_KEY is missing",
+        message: "GROQ_API_KEY is missing",
       });
     }
 
-    const safeConversation = Array.isArray(
-      conversation
-    )
+    const safeConversation = Array.isArray(conversation)
       ? conversation
           .filter(
             (item) =>
               item &&
-              (item.role === "user" ||
-                item.role === "assistant") &&
+              ["user", "assistant"].includes(item.role) &&
               typeof item.content === "string"
           )
           .slice(-10)
@@ -87,30 +82,29 @@ const chatWithAI = async (req, res) => {
         role: "system",
         content: SYSTEM_PROMPT,
       },
-
       ...safeConversation,
-
       {
         role: "user",
         content: message.trim(),
       },
     ];
 
-    const response =
-      await client.chat.completions.create({
-        model: "auto",
-
-        messages,
-
-        temperature: 0.7,
-
-        max_tokens: 2500,
-      });
+    const response = await client.chat.completions.create({
+      model:
+        process.env.GROQ_CHAT_MODEL ||
+        "openai/gpt-oss-120b",
+      messages,
+      temperature: 0.7,
+      max_completion_tokens: 2500,
+    });
 
     const assistantMessage =
       response.choices?.[0]?.message?.content;
 
-    if (!assistantMessage) {
+    if (
+      !assistantMessage ||
+      typeof assistantMessage !== "string"
+    ) {
       return res.status(502).json({
         success: false,
         message: "AI returned an empty response",
@@ -120,22 +114,17 @@ const chatWithAI = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: assistantMessage,
-      model:
-        response.model || "auto",
+      model: response.model,
     });
   } catch (error) {
-    console.error(
-      "========== OMNIROUTE ERROR =========="
-    );
-
-    console.error(error);
-
-    console.error(
-      "====================================="
-    );
+    console.error("========== GROQ AI ERROR ==========");
+    console.error(error.message);
+    console.error("===================================");
 
     return res.status(
-      error.status || 500
+      error.status >= 400 && error.status < 600
+        ? error.status
+        : 500
     ).json({
       success: false,
       message: "Unable to get AI response",

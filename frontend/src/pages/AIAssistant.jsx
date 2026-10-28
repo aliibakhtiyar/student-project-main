@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import ReactMarkdown from "react-markdown";
 import {
   Bot,
   Sparkles,
@@ -1021,7 +1022,7 @@ const AIAssistant = () => {
                         }
                       `}
                     >
-                      {message.content}
+                      <ReactMarkdown>{message.content}</ReactMarkdown>
                     </div>
 
 

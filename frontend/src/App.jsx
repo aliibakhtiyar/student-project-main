@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-
+import QuizPractice from "./pages/QuizPractice";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Hackathons from "./pages/Hackathons";
@@ -111,6 +111,10 @@ const App = () => {
           path="/resume-builder"
           element={<ResumeBuilder />}
         />
+        <Route
+  path="/quiz-practice"
+  element={<QuizPractice />}
+/>
 
         <Route
           path="/profile"

@@ -47,6 +47,11 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
     },
     { name: "Public Profile", path: "/public-profile", icon: "◉" },
     {
+  name: "Quiz Practice",
+  path: "/quiz-practice",
+  icon: "𖡎",
+},
+    {
       name: "Profile",
       path: "/profile",
       icon: "○",
