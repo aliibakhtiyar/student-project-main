@@ -55,7 +55,7 @@ const linkedInCallback = async (req, res) => {
       );
 
       return res.redirect(
-        "http://localhost:5173/public-profile?linkedin=error"
+        "https://student-project-main.onrender.com/public-profile?linkedin=error"
       );
     }
 
@@ -149,7 +149,7 @@ const linkedInCallback = async (req, res) => {
     // ===================================================
 
     res.redirect(
-      "http://localhost:5173/public-profile?linkedin=connected"
+      "https://student-project-main.onrender.com/public-profile?linkedin=connected"
     );
 
   } catch (error) {
@@ -161,7 +161,7 @@ const linkedInCallback = async (req, res) => {
     );
 
     res.redirect(
-      "http://localhost:5173/public-profile?linkedin=error"
+      "https://student-project-main.onrender.com/public-profile?linkedin=error"
     );
   }
 };
