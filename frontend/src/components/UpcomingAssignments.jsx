@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ClipboardList, RefreshCw } from "lucide-react";
 import AssignmentCard from "./AssignmentCard";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://student-project-main.onrender.com";
 
 const UpcomingAssignments = () => {
 
