@@ -214,7 +214,7 @@ const classroomCallback = async (
 
     // Redirect frontend
     return res.redirect(
-      "https://student-project-main.onrender.com"
+      "https://student-project-main-1.onrender.com/classroom"
     );
 
   } catch (error) {
