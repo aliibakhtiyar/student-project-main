@@ -1,3 +1,4 @@
+
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -566,15 +567,15 @@ const Dashboard = () => {
   // ==========================================
 
   return (
-    <div className="min-h-screen bg-[#070B14] px-4 py-6 text-white md:px-8">
+    <div className="min-h-screen w-full min-w-0 overflow-x-hidden bg-[#070B14] px-3 py-5 text-white sm:px-4 sm:py-6 md:px-8 md:py-8">
 
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto w-full min-w-0 max-w-7xl">
 
         {/* ==========================================
             HEADER
         ========================================== */}
 
-        <div className="relative mb-6 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl md:p-8">
+        <div className="relative mb-6 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-xl sm:p-6 md:p-8">
 
           <div className="pointer-events-none absolute -right-20 -top-24 h-64 w-64 rounded-full bg-indigo-600/10 blur-3xl" />
 
@@ -590,7 +591,7 @@ const Dashboard = () => {
 
             </div>
 
-            <h1 className="mt-3 text-3xl font-bold tracking-tight text-white md:text-4xl">
+            <h1 className="mt-3 break-words text-2xl font-bold tracking-tight text-white sm:text-3xl md:text-4xl">
 
               Welcome back,{" "}
 
@@ -615,7 +616,7 @@ const Dashboard = () => {
             STATS
         ========================================== */}
 
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 md:grid-cols-3">
 
           {/* OPPORTUNITIES */}
 
@@ -678,17 +679,17 @@ const Dashboard = () => {
             CLASSROOM + UPCOMING
         ========================================== */}
 
-        <div className="mt-5 grid gap-5 lg:grid-cols-2">
+        <div className="mt-5 grid min-w-0 grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-2">
 
           {/* ========================================
               CLASSROOM
           ======================================== */}
 
-          <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl">
+          <div className="min-w-0 rounded-3xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-xl sm:p-6">
 
             {/* HEADER */}
 
-            <div className="flex items-center justify-between">
+            <div className="flex min-w-0 flex-wrap items-center justify-between gap-3">
 
               <div className="flex items-center gap-3">
 
@@ -712,7 +713,7 @@ const Dashboard = () => {
 
               <Link
                 to="/classroom"
-                className="rounded-lg border border-white/10 px-3 py-2 text-[10px] font-semibold text-slate-400 transition hover:border-indigo-400/30 hover:text-indigo-400"
+                className="shrink-0 rounded-lg border border-white/10 px-3 py-2 text-[10px] font-semibold text-slate-400 transition hover:border-indigo-400/30 hover:text-indigo-400"
               >
                 Open →
               </Link>
@@ -733,11 +734,11 @@ const Dashboard = () => {
 
               /* NOT CONNECTED */
 
-              <div className="mt-5 rounded-2xl border border-white/10 bg-black/10 p-5">
+              <div className="mt-5 rounded-2xl border border-white/10 bg-black/10 p-4 sm:p-5">
 
                 <div className="flex items-start gap-4">
 
-                  <div className="text-xl">
+                  <div className="shrink-0 text-xl">
                     🔗
                   </div>
 
@@ -773,7 +774,7 @@ const Dashboard = () => {
 
                 {/* STATUS */}
 
-                <div className="flex items-center justify-between rounded-xl border border-emerald-400/10 bg-emerald-500/[0.04] px-4 py-3">
+                <div className="flex items-center justify-between gap-3 rounded-xl border border-emerald-400/10 bg-emerald-500/[0.04] px-3 py-3 sm:px-4">
 
                   <div>
 
@@ -787,7 +788,7 @@ const Dashboard = () => {
 
                   </div>
 
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/10 text-sm">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-500/10 text-sm">
                     ✓
                   </div>
 
@@ -808,10 +809,10 @@ const Dashboard = () => {
                         : undefined
                     }
                     rel="noreferrer"
-                    className="mt-3 block rounded-xl border border-white/10 bg-black/10 p-4 transition hover:border-indigo-500/30 hover:bg-indigo-500/[0.03]"
+                    className="mt-3 block min-w-0 rounded-xl border border-white/10 bg-black/10 p-3 transition hover:border-indigo-500/30 hover:bg-indigo-500/[0.03] sm:p-4"
                   >
 
-                    <div className="flex items-start justify-between gap-3">
+                    <div className="flex min-w-0 items-start justify-between gap-3">
 
                       <div className="min-w-0">
 
@@ -829,7 +830,7 @@ const Dashboard = () => {
 
                       </div>
 
-                      <span className="shrink-0 rounded-full bg-amber-500/10 px-2.5 py-1 text-[9px] font-semibold text-amber-400">
+                      <span className="shrink-0 rounded-full bg-amber-500/10 px-2 py-1 text-[9px] font-semibold text-amber-400">
                         {getDueLabel(
                           nextAssignment.dueDate
                         )}
@@ -869,11 +870,11 @@ const Dashboard = () => {
               UPCOMING
           ======================================== */}
 
-          <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl">
+          <div className="min-w-0 rounded-3xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-xl sm:p-6">
 
             {/* HEADER */}
 
-            <div className="flex items-center justify-between">
+            <div className="flex min-w-0 flex-wrap items-center justify-between gap-3">
 
               <div className="flex items-center gap-3">
 
@@ -897,7 +898,7 @@ const Dashboard = () => {
 
               {upcomingAssignments.length > 0 && (
 
-                <span className="rounded-full bg-amber-500/10 px-2.5 py-1 text-[9px] font-bold text-amber-400">
+                <span className="shrink-0 rounded-full bg-amber-500/10 px-2.5 py-1 text-[9px] font-bold text-amber-400">
                   {upcomingAssignments.length}
                 </span>
 
@@ -907,7 +908,7 @@ const Dashboard = () => {
 
             {/* UPCOMING LIST */}
 
-            <div className="mt-5 max-h-[245px] space-y-2.5 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+            <div className="mt-5 max-h-[245px] space-y-2.5 overflow-y-auto overflow-x-hidden pr-1 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
 
               {classroomLoading ? (
 
@@ -974,10 +975,10 @@ const Dashboard = () => {
                           : undefined
                       }
                       rel="noreferrer"
-                      className="group block rounded-xl border border-white/10 bg-black/10 p-3 transition hover:border-indigo-500/20 hover:bg-indigo-500/[0.03]"
+                      className="group block min-w-0 rounded-xl border border-white/10 bg-black/10 p-3 transition hover:border-indigo-500/20 hover:bg-indigo-500/[0.03]"
                     >
 
-                      <div className="flex items-center gap-3">
+                      <div className="flex min-w-0 items-center gap-2 sm:gap-3">
 
                         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-500/10 text-sm">
                           📝
@@ -995,7 +996,7 @@ const Dashboard = () => {
 
                         </div>
 
-                        <span className="shrink-0 rounded-full bg-amber-500/10 px-2 py-1 text-[9px] font-semibold text-amber-400">
+                        <span className="shrink-0 rounded-full bg-amber-500/10 px-2 py-1 text-[8px] font-semibold text-amber-400 sm:text-[9px]">
                           {getDueLabel(
                             assignment.dueDate
                           )}
@@ -1034,29 +1035,29 @@ const Dashboard = () => {
             CALENDAR
         ========================================== */}
 
-        <div className="mt-5 grid gap-5 lg:grid-cols-3">
+        <div className="mt-5 grid min-w-0 grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-3">
 
           {/* CALENDAR */}
 
-          <div className="rounded-3xl border border-white/10 bg-white/[0.05] p-6 backdrop-blur-xl lg:col-span-2">
+          <div className="min-w-0 rounded-3xl border border-white/10 bg-white/[0.05] p-4 backdrop-blur-xl sm:p-6 lg:col-span-2">
 
             {/* CALENDAR HEADER */}
 
-            <div className="flex items-center justify-between">
+            <div className="flex min-w-0 flex-wrap items-center justify-between gap-3">
 
-              <div className="flex items-center gap-3">
+              <div className="flex min-w-0 items-center gap-3">
 
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-indigo-400/20 bg-indigo-500/10">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-indigo-400/20 bg-indigo-500/10">
                   📅
                 </div>
 
-                <div>
+                <div className="min-w-0">
 
                   <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-indigo-400">
                     Academic calendar
                   </p>
 
-                  <h2 className="mt-1 text-lg font-bold text-white">
+                  <h2 className="mt-1 truncate text-base font-bold text-white sm:text-lg">
                     {monthName}
                   </h2>
 
@@ -1064,7 +1065,7 @@ const Dashboard = () => {
 
               </div>
 
-              <div className="flex items-center gap-1.5">
+              <div className="flex shrink-0 items-center gap-1">
 
                 <button
                   onClick={previousMonth}
@@ -1075,7 +1076,7 @@ const Dashboard = () => {
 
                 <button
                   onClick={goToToday}
-                  className="rounded-lg border border-white/10 px-2.5 py-1.5 text-[9px] font-semibold text-slate-400 transition hover:border-indigo-400/30 hover:text-indigo-400"
+                  className="rounded-lg border border-white/10 px-2 py-1.5 text-[9px] font-semibold text-slate-400 transition hover:border-indigo-400/30 hover:text-indigo-400 sm:px-2.5"
                 >
                   Today
                 </button>
@@ -1093,7 +1094,7 @@ const Dashboard = () => {
 
             {/* WEEK DAYS */}
 
-            <div className="mt-6 grid grid-cols-7">
+            <div className="mt-5 grid grid-cols-7 sm:mt-6">
 
               {[
                 "Sun",
@@ -1108,7 +1109,7 @@ const Dashboard = () => {
 
                   <div
                     key={day}
-                    className="pb-2 text-center text-[9px] font-bold uppercase tracking-wider text-slate-600"
+                    className="pb-2 text-center text-[8px] font-bold uppercase tracking-wider text-slate-600 sm:text-[9px]"
                   >
                     {day}
                   </div>
@@ -1120,7 +1121,7 @@ const Dashboard = () => {
 
             {/* CALENDAR GRID */}
 
-            <div className="grid grid-cols-7 gap-1">
+            <div className="grid grid-cols-7 gap-0.5 sm:gap-1">
 
               {calendarDays.map(
                 (date, index) => {
@@ -1129,7 +1130,7 @@ const Dashboard = () => {
                     return (
                       <div
                         key={`empty-${index}`}
-                        className="min-h-[55px]"
+                        className="min-h-[48px] sm:min-h-[55px]"
                       />
                     );
                   }
@@ -1166,9 +1167,9 @@ const Dashboard = () => {
                         )
                       }
                       className={`
-                        relative min-h-[55px]
+                        relative min-h-[48px] sm:min-h-[55px]
                         rounded-lg border
-                        p-1.5 text-left
+                        p-1 sm:p-1.5 text-left
                         transition
                         ${
                           isSelected
@@ -1180,7 +1181,7 @@ const Dashboard = () => {
 
                       <div
                         className={`
-                          flex h-6 w-6 items-center justify-center rounded-md text-[10px] font-semibold
+                          flex h-6 w-6 items-center justify-center rounded-md text-[9px] font-semibold sm:text-[10px]
                           ${
                             isToday
                               ? "bg-indigo-600 text-white"
@@ -1193,7 +1194,7 @@ const Dashboard = () => {
 
                       {hasAssignment && (
 
-                        <div className="absolute bottom-1.5 left-1.5 flex items-center gap-1">
+                        <div className="absolute bottom-1 left-1 flex items-center gap-1 sm:bottom-1.5 sm:left-1.5">
 
                           <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
 
@@ -1214,7 +1215,7 @@ const Dashboard = () => {
 
             {/* LEGEND */}
 
-            <div className="mt-4 flex items-center gap-4 border-t border-white/5 pt-3">
+            <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-white/5 pt-3 sm:gap-4">
 
               <div className="flex items-center gap-2">
 
@@ -1242,13 +1243,13 @@ const Dashboard = () => {
 
           {/* SELECTED DATE */}
 
-          <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl">
+          <div className="min-w-0 rounded-3xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-xl sm:p-6">
 
             <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-indigo-400">
               Selected date
             </p>
 
-            <h2 className="mt-2 text-lg font-bold text-white">
+            <h2 className="mt-2 break-words text-lg font-bold text-white">
               {selectedDate.toLocaleDateString(
                 "en-IN",
                 {
@@ -1310,11 +1311,11 @@ const Dashboard = () => {
 
                           <div className="min-w-0">
 
-                            <p className="truncate text-xs font-semibold text-slate-200">
+                            <p className="break-words text-xs font-semibold text-slate-200">
                               {assignment.title}
                             </p>
 
-                            <p className="mt-1 truncate text-[10px] text-slate-600">
+                            <p className="mt-1 break-words text-[10px] text-slate-600">
                               {assignment.courseName}
                             </p>
 
@@ -1361,11 +1362,11 @@ const Dashboard = () => {
             OPPORTUNITIES
         ========================================== */}
 
-        <div className="mt-5 grid gap-5 lg:grid-cols-3">
+        <div className="mt-5 grid min-w-0 grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-3">
 
           {/* PROFILE */}
 
-          <div className="relative overflow-hidden rounded-3xl border border-indigo-400/10 bg-gradient-to-br from-indigo-950/60 via-[#0B1220] to-[#0A0F1C] p-6">
+          <div className="relative min-w-0 overflow-hidden rounded-3xl border border-indigo-400/10 bg-gradient-to-br from-indigo-950/60 via-[#0B1220] to-[#0A0F1C] p-4 sm:p-6">
 
             <div className="relative">
 
@@ -1419,17 +1420,17 @@ const Dashboard = () => {
 
           {/* OPPORTUNITIES */}
 
-          <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl lg:col-span-2">
+          <div className="min-w-0 rounded-3xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-xl sm:p-6 lg:col-span-2">
 
-            <div className="flex items-center justify-between">
+            <div className="flex min-w-0 flex-wrap items-center justify-between gap-3">
 
-              <div>
+              <div className="min-w-0">
 
                 <div className="flex items-center gap-2">
 
                   <span className="h-1.5 w-1.5 rounded-full bg-indigo-500" />
 
-                  <h2 className="font-bold text-white">
+                  <h2 className="break-words font-bold text-white">
                     Recommended opportunities
                   </h2>
 
@@ -1443,7 +1444,7 @@ const Dashboard = () => {
 
               <Link
                 to="/opportunities"
-                className="hidden rounded-lg border border-white/10 px-3 py-2 text-[10px] font-semibold text-slate-400 transition hover:border-indigo-400/30 hover:text-indigo-400 sm:block"
+                className="hidden shrink-0 rounded-lg border border-white/10 px-3 py-2 text-[10px] font-semibold text-slate-400 transition hover:border-indigo-400/30 hover:text-indigo-400 sm:block"
               >
                 View all →
               </Link>
@@ -1493,7 +1494,7 @@ const Dashboard = () => {
 
             ) : (
 
-              <div className="mt-5 grid gap-3 sm:grid-cols-2">
+              <div className="mt-5 grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2">
 
                 {opportunities
                   .slice(0, 4)
@@ -1507,22 +1508,22 @@ const Dashboard = () => {
                         }
                         target="_blank"
                         rel="noreferrer"
-                        className="group rounded-xl border border-white/10 bg-white/[0.02] p-3 transition hover:border-indigo-500/30 hover:bg-indigo-500/[0.03]"
+                        className="group min-w-0 rounded-xl border border-white/10 bg-white/[0.02] p-3 transition hover:border-indigo-500/30 hover:bg-indigo-500/[0.03]"
                       >
 
-                        <div className="flex items-start justify-between gap-3">
+                        <div className="flex min-w-0 items-start justify-between gap-3">
 
                           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-indigo-400/10 bg-indigo-500/10 text-xs text-indigo-400">
                             ◆
                           </div>
 
-                          <span className="rounded-full border border-indigo-400/10 bg-indigo-500/10 px-2 py-1 text-[8px] font-bold uppercase tracking-wider text-indigo-400">
+                          <span className="max-w-[65%] truncate rounded-full border border-indigo-400/10 bg-indigo-500/10 px-2 py-1 text-[8px] font-bold uppercase tracking-wider text-indigo-400">
                             {opportunity.type}
                           </span>
 
                         </div>
 
-                        <p className="mt-3 line-clamp-2 text-xs font-semibold leading-5 text-slate-200 transition group-hover:text-indigo-400">
+                        <p className="mt-3 line-clamp-2 break-words text-xs font-semibold leading-5 text-slate-200 transition group-hover:text-indigo-400">
                           {opportunity.title}
                         </p>
 
