@@ -104,36 +104,42 @@ const QuizPractice = () => {
   };
 
   const card =
-    "rounded-2xl border border-white/10 bg-white/[0.04] p-5";
+    "rounded-2xl border border-white/10 bg-white/[0.04] p-4 sm:p-5";
 
   const input =
-    "w-full rounded-xl border border-white/10 bg-slate-900 px-4 py-3 text-sm text-white outline-none focus:border-indigo-500";
+    "w-full min-w-0 rounded-xl border border-white/10 bg-slate-900 px-4 py-3 text-sm text-white outline-none focus:border-indigo-500";
 
   return (
-    <div className="min-h-screen bg-[#070B14] px-4 py-8 text-white md:px-8">
-      <div className="mx-auto max-w-6xl space-y-8">
-        <header>
+    <div className="min-h-screen w-full min-w-0 overflow-x-hidden bg-[#070B14] px-3 py-5 text-white sm:px-4 sm:py-8 md:px-8">
+
+      <div className="mx-auto w-full max-w-6xl space-y-6 sm:space-y-8">
+
+        <header className="min-w-0">
+
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-indigo-400">
             UniSphere AI
           </p>
 
-          <h1 className="mt-3 text-3xl font-bold md:text-4xl">
+          <h1 className="mt-3 text-2xl font-bold sm:text-3xl md:text-4xl">
             Quiz Practice
           </h1>
 
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 max-w-xl text-sm leading-6 text-slate-400">
             Choose a topic, test your knowledge, and track
             your progress.
           </p>
+
         </header>
 
         {!quiz && (
           <form onSubmit={generateQuiz} className={card}>
+
             <h2 className="mb-5 text-lg font-semibold">
               Create your quiz
             </h2>
 
             <div className="space-y-4">
+
               <div>
                 <label className="mb-2 block text-sm text-slate-300">
                   Topic or subject
@@ -148,7 +154,8 @@ const QuizPractice = () => {
                 />
               </div>
 
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2">
+
                 <div>
                   <label className="mb-2 block text-sm text-slate-300">
                     Difficulty
@@ -180,6 +187,7 @@ const QuizPractice = () => {
                     <option value={15}>15 questions</option>
                   </select>
                 </div>
+
               </div>
 
               <button
@@ -189,22 +197,24 @@ const QuizPractice = () => {
               >
                 {loading ? "Generating..." : "Generate Quiz with AI"}
               </button>
+
             </div>
           </form>
         )}
 
         {quiz && !result && (
-          <section className="space-y-5">
+          <section className="space-y-4 sm:space-y-5">
+
             <div className={card}>
               <p className="text-xs text-indigo-400">
                 {quiz.difficulty} difficulty
               </p>
 
-              <h2 className="mt-1 text-xl font-bold">
+              <h2 className="mt-1 break-words text-lg font-bold sm:text-xl">
                 {quiz.topic}
               </h2>
 
-              <p className="mt-2 text-sm text-slate-400">
+              <p className="mt-2 text-sm leading-6 text-slate-400">
                 {quiz.questions.length} questions · Each question
                 carries 1 mark
               </p>
@@ -212,7 +222,8 @@ const QuizPractice = () => {
 
             {quiz.questions.map((q, index) => (
               <div key={q.id} className={card}>
-                <p className="mb-4 text-sm font-semibold leading-6">
+
+                <p className="mb-4 break-words text-sm font-semibold leading-6">
                   <span className="mr-2 text-indigo-400">
                     Q{index + 1}.
                   </span>
@@ -233,20 +244,23 @@ const QuizPractice = () => {
                             [index]: optionIndex,
                           }))
                         }
-                        className={`w-full rounded-xl border p-3 text-left text-sm transition ${
+                        className={`flex w-full min-w-0 items-start rounded-xl border p-3 text-left text-sm leading-6 transition ${
                           selected
                             ? "border-indigo-500 bg-indigo-500/15 text-white"
                             : "border-white/10 bg-white/[0.02] text-slate-300 hover:border-white/30"
                         }`}
                       >
-                        <span className="mr-3 text-indigo-400">
+                        <span className="mr-3 shrink-0 text-indigo-400">
                           {String.fromCharCode(65 + optionIndex)}.
                         </span>
-                        {option}
+                        <span className="min-w-0 break-words">
+                          {option}
+                        </span>
                       </button>
                     );
                   })}
                 </div>
+
               </div>
             ))}
 
@@ -254,21 +268,24 @@ const QuizPractice = () => {
               type="button"
               onClick={submitQuiz}
               disabled={loading}
-              className="rounded-xl bg-emerald-600 px-6 py-3 font-semibold hover:bg-emerald-500 disabled:opacity-50"
+              className="w-full rounded-xl bg-emerald-600 px-6 py-3 font-semibold hover:bg-emerald-500 disabled:opacity-50 sm:w-auto"
             >
               {loading ? "Submitting..." : "Submit Quiz"}
             </button>
+
           </section>
         )}
 
         {result && (
-          <section className="space-y-5">
+          <section className="space-y-4 sm:space-y-5">
+
             <div className={`${card} text-center`}>
+
               <p className="text-sm text-slate-400">
                 Quiz completed
               </p>
 
-              <h2 className="mt-3 text-5xl font-bold text-emerald-400">
+              <h2 className="mt-3 text-4xl font-bold text-emerald-400 sm:text-5xl">
                 {result.percentage}%
               </h2>
 
@@ -285,20 +302,22 @@ const QuizPractice = () => {
               <button
                 type="button"
                 onClick={startNewQuiz}
-                className="mt-5 rounded-xl bg-indigo-600 px-5 py-3 font-semibold hover:bg-indigo-500"
+                className="mt-5 w-full rounded-xl bg-indigo-600 px-5 py-3 font-semibold hover:bg-indigo-500 sm:w-auto"
               >
                 Practice Another Topic
               </button>
+
             </div>
 
             {result.results.map((item, index) => (
               <div key={index} className={card}>
-                <p className="font-semibold leading-6">
+
+                <p className="break-words font-semibold leading-6">
                   {index + 1}. {item.question}
                 </p>
 
                 <p
-                  className={`mt-3 text-sm ${
+                  className={`mt-3 break-words text-sm ${
                     item.isCorrect
                       ? "text-emerald-400"
                       : "text-red-400"
@@ -311,22 +330,28 @@ const QuizPractice = () => {
                 </p>
 
                 {!item.isCorrect && (
-                  <p className="mt-2 text-sm text-emerald-400">
+                  <p className="mt-2 break-words text-sm text-emerald-400">
                     Correct answer: {item.options[item.correctAnswer]}
                   </p>
                 )}
 
-                <p className="mt-3 text-sm leading-6 text-slate-400">
+                <p className="mt-3 break-words text-sm leading-6 text-slate-400">
                   {item.explanation}
                 </p>
+
               </div>
             ))}
+
           </section>
         )}
 
         <section className="space-y-4">
+
           <div>
-            <h2 className="text-xl font-bold">Quiz History</h2>
+            <h2 className="text-lg font-bold sm:text-xl">
+              Quiz History
+            </h2>
+
             <p className="mt-1 text-sm text-slate-400">
               Your previous completed attempts
             </p>
@@ -338,7 +363,7 @@ const QuizPractice = () => {
             </p>
           ) : history.length === 0 ? (
             <div className={card}>
-              <p className="text-sm text-slate-400">
+              <p className="text-sm leading-6 text-slate-400">
                 No completed quizzes yet. Take your first quiz
                 to start tracking your scores.
               </p>
@@ -348,10 +373,12 @@ const QuizPractice = () => {
               {history.map((item) => (
                 <div
                   key={item._id}
-                  className="flex flex-col justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4 sm:flex-row sm:items-center"
+                  className="flex min-w-0 flex-col justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4 sm:flex-row sm:items-center"
                 >
-                  <div>
-                    <h3 className="font-semibold">{item.topic}</h3>
+                  <div className="min-w-0">
+                    <h3 className="break-words font-semibold">
+                      {item.topic}
+                    </h3>
 
                     <p className="mt-1 text-xs text-slate-400">
                       {item.difficulty} ·{" "}
@@ -359,7 +386,7 @@ const QuizPractice = () => {
                     </p>
                   </div>
 
-                  <div className="sm:text-right">
+                  <div className="flex items-center justify-between gap-3 sm:block sm:shrink-0 sm:text-right">
                     <p className="font-bold text-indigo-400">
                       {item.score}/{item.totalQuestions}
                     </p>
@@ -372,7 +399,9 @@ const QuizPractice = () => {
               ))}
             </div>
           )}
+
         </section>
+
       </div>
     </div>
   );
