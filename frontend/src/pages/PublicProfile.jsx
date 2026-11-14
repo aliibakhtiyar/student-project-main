@@ -29,7 +29,7 @@ function SectionTitle({
   const SafeIcon = Icon || Code2;
 
   return (
-    <div className="mb-4 flex items-center justify-between">
+    <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
       <div className="flex items-center gap-3">
         <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-700 bg-slate-800">
           <SafeIcon className="h-4 w-4 text-slate-300" />
@@ -63,8 +63,8 @@ function StatCard({
   const SafeIcon = Icon || Code2;
 
   return (
-    <div className="rounded-xl border border-slate-800 bg-slate-900/80 p-4">
-      <div className="flex items-center gap-2 text-slate-400">
+    <div className="min-w-0 rounded-xl border border-slate-800 bg-slate-900/80 p-3 sm:p-4">
+      <div className="flex min-w-0 flex-wrap items-center gap-2 text-slate-400">
         <SafeIcon className="h-4 w-4" />
 
         <span className="text-xs">
@@ -87,7 +87,7 @@ function LoadingCard({
   text = "Loading...",
 }) {
   return (
-    <div className="flex items-center justify-center rounded-2xl border border-slate-800 bg-slate-900/70 p-8 text-sm text-slate-400">
+    <div className="flex items-center justify-center rounded-2xl border border-slate-800 bg-slate-900/70 p-5 text-sm text-slate-400 sm:p-8">
       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
       {text}
     </div>
@@ -102,7 +102,7 @@ function ErrorCard({
   text,
 }) {
   return (
-    <div className="flex items-center gap-3 rounded-2xl border border-red-500/20 bg-red-500/5 p-5 text-sm text-red-300">
+    <div className="flex min-w-0 items-start gap-3 break-words rounded-2xl border border-red-500/20 bg-red-500/5 p-4 text-sm text-red-300 sm:p-5">
       <AlertCircle className="h-5 w-5 shrink-0" />
       <span>{text}</span>
     </div>
@@ -170,7 +170,7 @@ function ActivityGraph({
         })}
       </div>
 
-      <div className="mt-3 flex items-center justify-end gap-2 text-[10px] text-slate-500">
+      <div className="mt-3 flex flex-wrap items-center justify-end gap-2 text-[10px] text-slate-500">
         <span>Less</span>
 
         <span className="h-3 w-3 rounded-sm bg-slate-800" />
@@ -221,7 +221,7 @@ function GitHubSection({
           description="Developer activity"
         />
 
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
+        <div className="min-w-0 rounded-2xl border border-slate-800 bg-slate-900/80 p-4 sm:p-6">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-start gap-4">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-800">
@@ -289,7 +289,7 @@ function GitHubSection({
       />
 
       {/* PROFILE */}
-      <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+      <div className="min-w-0 rounded-2xl border border-slate-800 bg-slate-900/80 p-4 sm:p-5">
         <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
             {github.avatar_url ? (
@@ -341,7 +341,7 @@ function GitHubSection({
         </div>
 
         {/* STATS */}
-        <div className="mt-5 grid grid-cols-2 gap-3 md:grid-cols-4">
+        <div className="mt-5 grid grid-cols-2 gap-2.5 sm:gap-3 md:grid-cols-4">
           <StatCard
             icon={BookOpen}
             label="Repositories"
@@ -394,7 +394,7 @@ function GitHubSection({
 
       {/* REPOSITORIES */}
       <div className="mt-5">
-        <div className="mb-3 flex items-center justify-between">
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
           <h3 className="text-sm font-semibold text-white">
             Top repositories
           </h3>
@@ -491,7 +491,7 @@ function LeetCodeSection({
           description="Problem solving"
         />
 
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+        <div className="min-w-0 rounded-2xl border border-slate-800 bg-slate-900/80 p-4 sm:p-5">
           <label className="mb-2 block text-xs font-medium text-slate-400">
             LeetCode Username
           </label>
@@ -556,7 +556,7 @@ function LeetCodeSection({
         description="Problem solving"
       />
 
-      <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+      <div className="min-w-0 rounded-2xl border border-slate-800 bg-slate-900/80 p-4 sm:p-5">
         {/* PROFILE HEADER */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3">
@@ -587,7 +587,7 @@ function LeetCodeSection({
             </div>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <button
               type="button"
               onClick={onLoad}
@@ -620,7 +620,7 @@ function LeetCodeSection({
         </div>
 
         {/* SOLVED STATS */}
-        <div className="mt-5 grid grid-cols-2 gap-3 md:grid-cols-4">
+        <div className="mt-5 grid grid-cols-2 gap-2.5 sm:gap-3 md:grid-cols-4">
           <StatCard
             icon={Trophy}
             label="Total Solved"
@@ -648,8 +648,8 @@ function LeetCodeSection({
 
         {/* CONTEST */}
         {contest && (
-          <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-4">
-            <div className="rounded-xl border border-slate-800 bg-slate-950 p-3">
+          <div className="mt-4 grid grid-cols-2 gap-2.5 sm:gap-3 md:grid-cols-4">
+            <div className="min-w-0 rounded-xl border border-slate-800 bg-slate-950 p-3">
               <p className="text-[11px] text-slate-500">
                 Contest Rating
               </p>
@@ -659,7 +659,7 @@ function LeetCodeSection({
               </p>
             </div>
 
-            <div className="rounded-xl border border-slate-800 bg-slate-950 p-3">
+            <div className="min-w-0 rounded-xl border border-slate-800 bg-slate-950 p-3">
               <p className="text-[11px] text-slate-500">
                 Global Rank
               </p>
@@ -669,7 +669,7 @@ function LeetCodeSection({
               </p>
             </div>
 
-            <div className="rounded-xl border border-slate-800 bg-slate-950 p-3">
+            <div className="min-w-0 rounded-xl border border-slate-800 bg-slate-950 p-3">
               <p className="text-[11px] text-slate-500">
                 Top %
               </p>
@@ -681,7 +681,7 @@ function LeetCodeSection({
               </p>
             </div>
 
-            <div className="rounded-xl border border-slate-800 bg-slate-950 p-3">
+            <div className="min-w-0 rounded-xl border border-slate-800 bg-slate-950 p-3">
               <p className="text-[11px] text-slate-500">
                 Contests
               </p>
@@ -775,7 +775,7 @@ function LinkedInSection({
         description="Professional profile"
       />
 
-      <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+      <div className="min-w-0 rounded-2xl border border-slate-800 bg-slate-900/80 p-4 sm:p-5">
         {linkedin ? (
           <div>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -1166,19 +1166,19 @@ export default function PublicProfile() {
   // ==========================================================
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
-      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+    <div className="min-h-screen w-full min-w-0 overflow-x-hidden bg-slate-950 text-white">
+      <div className="mx-auto w-full min-w-0 max-w-7xl px-3 py-5 sm:px-6 sm:py-6 lg:px-8">
 
         {/* ==================================================
             HEADER
         ================================================== */}
 
-        <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mb-6 flex min-w-0 flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <div className="flex items-center gap-2">
               <CircleUserRound className="h-5 w-5 text-slate-400" />
 
-              <h1 className="text-2xl font-bold tracking-tight">
+              <h1 className="text-xl font-bold tracking-tight sm:text-2xl">
                 Public Profile
               </h1>
             </div>
@@ -1193,7 +1193,7 @@ export default function PublicProfile() {
             type="button"
             onClick={fetchAllProfileData}
             disabled={loading}
-            className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-900 px-4 py-2.5 text-sm font-medium text-slate-200 transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-900 px-4 py-2.5 text-sm font-medium text-slate-200 transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
           >
             <RefreshCw
               className={`h-4 w-4 ${
@@ -1211,8 +1211,8 @@ export default function PublicProfile() {
             QUICK SUMMARY
         ================================================== */}
 
-        <div className="mb-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
-          <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-4">
+        <div className="mb-8 grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:grid-cols-3">
+          <div className="min-w-0 rounded-xl border border-slate-800 bg-slate-900/70 p-3 sm:p-4">
             <p className="text-xs text-slate-500">
               GitHub repositories
             </p>
@@ -1222,7 +1222,7 @@ export default function PublicProfile() {
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-4">
+          <div className="min-w-0 rounded-xl border border-slate-800 bg-slate-900/70 p-3 sm:p-4">
             <p className="text-xs text-slate-500">
               LeetCode solved
             </p>
@@ -1232,7 +1232,7 @@ export default function PublicProfile() {
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-4">
+          <div className="min-w-0 rounded-xl border border-slate-800 bg-slate-900/70 p-3 sm:p-4">
             <p className="text-xs text-slate-500">
               GitHub followers
             </p>
