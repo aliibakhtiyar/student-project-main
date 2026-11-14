@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 
 import {
@@ -62,13 +63,13 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white lg:grid lg:grid-cols-2">
+    <div className="min-h-screen w-full bg-white lg:grid lg:grid-cols-2">
 
       {/* =========================
           LEFT SECTION
       ========================= */}
 
-      <div className="hidden bg-slate-950 p-12 lg:flex lg:flex-col lg:justify-between">
+      <div className="hidden min-w-0 bg-slate-950 p-12 lg:flex lg:flex-col lg:justify-between">
 
         <Logo light />
 
@@ -109,21 +110,21 @@ const Login = () => {
           RIGHT SECTION
       ========================= */}
 
-      <div className="flex min-h-screen items-center justify-center px-6 py-12">
+      <div className="flex min-h-screen min-w-0 items-center justify-center px-4 py-8 sm:px-6 sm:py-12">
 
         <div className="w-full max-w-md">
 
           {/* Mobile Logo */}
 
-          <div className="mb-10 lg:hidden">
+          <div className="mb-8 sm:mb-10 lg:hidden">
             <Logo />
           </div>
 
           {/* Heading */}
 
-          <div className="mb-8">
+          <div className="mb-7 sm:mb-8">
 
-            <h2 className="text-3xl font-bold tracking-tight text-slate-950">
+            <h2 className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
               Welcome back
             </h2>
 
@@ -164,7 +165,7 @@ const Login = () => {
 
             <div>
 
-              <div className="mb-2 flex items-center justify-between">
+              <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
 
                 <label className="text-sm font-semibold text-slate-700">
                   Password
@@ -230,7 +231,7 @@ const Login = () => {
 
           {/* Divider */}
 
-          <div className="my-7 flex items-center gap-4">
+          <div className="my-6 flex items-center gap-4 sm:my-7">
 
             <div className="h-px flex-1 bg-slate-100" />
 
