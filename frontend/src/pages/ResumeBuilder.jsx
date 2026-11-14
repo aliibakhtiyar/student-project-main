@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import toast from "react-hot-toast";
 import api from "../services/api";
@@ -209,19 +210,19 @@ const ResumeBuilder = () => {
   };
 
   const inputClass =
-    "w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-indigo-500/60 focus:bg-white/[0.06]";
+    "w-full min-w-0 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-indigo-500/60 focus:bg-white/[0.06]";
 
   const labelClass =
     "mb-2 block text-xs font-semibold text-slate-400";
 
   return (
-    <div className="min-h-screen bg-[#070B14] px-4 py-8 text-white md:px-8">
+    <div className="min-h-screen w-full overflow-x-hidden bg-[#070B14] px-3 py-6 text-white sm:px-4 sm:py-8 md:px-8">
 
       <div className="mx-auto max-w-7xl">
 
         {/* ================= HEADER ================= */}
 
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
 
           <div className="flex items-center gap-2">
 
@@ -235,7 +236,7 @@ const ResumeBuilder = () => {
 
           </div>
 
-          <h1 className="mt-4 font-[Space_Grotesk] text-3xl font-bold md:text-4xl">
+          <h1 className="mt-4 font-[Space_Grotesk] text-2xl font-bold sm:text-3xl md:text-4xl">
             Resume Builder
           </h1>
 
@@ -246,10 +247,9 @@ const ResumeBuilder = () => {
 
         </div>
 
-
         {/* ================= MAIN ================= */}
 
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid min-w-0 grid-cols-1 gap-5 sm:gap-6 lg:grid-cols-2">
 
           {/* =================================================
               LEFT FORM
@@ -257,10 +257,9 @@ const ResumeBuilder = () => {
 
           <div className="space-y-5">
 
-
             {/* PERSONAL */}
 
-            <section className="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
+            <section className="min-w-0 rounded-3xl border border-white/10 bg-white/[0.03] p-4 sm:p-6">
 
               <div className="mb-6">
 
@@ -274,7 +273,7 @@ const ResumeBuilder = () => {
 
               </div>
 
-              <div className="grid gap-4 md:grid-cols-2">
+              <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2">
 
                 <div>
                   <label className={labelClass}>
@@ -388,12 +387,11 @@ const ResumeBuilder = () => {
 
             </section>
 
-
             {/* SUMMARY */}
 
-            <section className="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
+            <section className="min-w-0 rounded-3xl border border-white/10 bg-white/[0.03] p-4 sm:p-6">
 
-              <div className="mb-5 flex items-center justify-between">
+              <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 
                 <div>
 
@@ -410,7 +408,7 @@ const ResumeBuilder = () => {
                 <button
                   onClick={generateSummary}
                   disabled={loading}
-                  className="rounded-xl bg-indigo-500 px-4 py-2 text-xs font-bold text-white transition hover:bg-indigo-400 disabled:opacity-50"
+                  className="w-full rounded-xl bg-indigo-500 px-4 py-2.5 text-xs font-bold text-white transition hover:bg-indigo-400 disabled:opacity-50 sm:w-auto"
                 >
                   {loading
                     ? "Generating..."
@@ -434,10 +432,9 @@ const ResumeBuilder = () => {
 
             </section>
 
-
             {/* SKILLS */}
 
-            <section className="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
+            <section className="min-w-0 rounded-3xl border border-white/10 bg-white/[0.03] p-4 sm:p-6">
 
               <div className="mb-6">
 
@@ -520,12 +517,11 @@ const ResumeBuilder = () => {
 
             </section>
 
-
             {/* EDUCATION */}
 
-            <section className="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
+            <section className="min-w-0 rounded-3xl border border-white/10 bg-white/[0.03] p-4 sm:p-6">
 
-              <div className="mb-6 flex items-center justify-between">
+              <div className="mb-6 flex items-center justify-between gap-3">
 
                 <div>
 
@@ -553,7 +549,7 @@ const ResumeBuilder = () => {
 
                   <div
                     key={index}
-                    className="mb-5 grid gap-4 border-b border-white/5 pb-5 md:grid-cols-2"
+                    className="mb-5 grid min-w-0 grid-cols-1 gap-4 border-b border-white/5 pb-5 sm:grid-cols-2"
                   >
 
                     <input
@@ -619,12 +615,11 @@ const ResumeBuilder = () => {
 
             </section>
 
-
             {/* PROJECTS */}
 
-            <section className="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
+            <section className="min-w-0 rounded-3xl border border-white/10 bg-white/[0.03] p-4 sm:p-6">
 
-              <div className="mb-6 flex items-center justify-between">
+              <div className="mb-6 flex items-center justify-between gap-3">
 
                 <div>
 
@@ -684,7 +679,7 @@ const ResumeBuilder = () => {
                       }
                     />
 
-                    <div className="flex gap-3">
+                    <div className="flex min-w-0 flex-col gap-3 sm:flex-row">
 
                       <input
                         className={inputClass}
@@ -704,7 +699,7 @@ const ResumeBuilder = () => {
                         onClick={() =>
                           improveProject(index)
                         }
-                        className="shrink-0 rounded-xl bg-indigo-500/10 px-4 text-xs font-bold text-indigo-400 hover:bg-indigo-500/20"
+                        className="w-full shrink-0 rounded-xl bg-indigo-500/10 px-4 py-3 text-xs font-bold text-indigo-400 hover:bg-indigo-500/20 sm:w-auto"
                       >
                         ✦ AI Improve
                       </button>
@@ -718,12 +713,11 @@ const ResumeBuilder = () => {
 
             </section>
 
-
             {/* EXPERIENCE */}
 
-            <section className="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
+            <section className="min-w-0 rounded-3xl border border-white/10 bg-white/[0.03] p-4 sm:p-6">
 
-              <div className="mb-6 flex items-center justify-between">
+              <div className="mb-6 flex items-center justify-between gap-3">
 
                 <div>
 
@@ -754,7 +748,7 @@ const ResumeBuilder = () => {
                     className="space-y-4"
                   >
 
-                    <div className="grid gap-4 md:grid-cols-2">
+                    <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2">
 
                       <input
                         className={inputClass}
@@ -824,7 +818,6 @@ const ResumeBuilder = () => {
 
           </div>
 
-
           {/* =================================================
               RIGHT PREVIEW
           ================================================= */}
@@ -835,7 +828,7 @@ const ResumeBuilder = () => {
 
               {/* Preview Header */}
 
-              <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
+              <div className="flex flex-col gap-3 border-b border-white/10 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
 
                 <div>
 
@@ -851,31 +844,30 @@ const ResumeBuilder = () => {
 
                 <button
                   onClick={() => window.print()}
-                  className="rounded-lg bg-white px-3 py-2 text-xs font-bold text-slate-950 hover:bg-slate-200"
+                  className="w-full rounded-lg bg-white px-3 py-2 text-xs font-bold text-slate-950 hover:bg-slate-200 sm:w-auto"
                 >
                   Download PDF
                 </button>
 
               </div>
 
-
               {/* Resume */}
 
-              <div className="bg-slate-100 p-4 md:p-7">
+              <div className="overflow-x-auto bg-slate-100 p-2 sm:p-4 md:p-7">
 
                 <div
                   id="resume-preview"
-                  className="mx-auto min-h-[900px] max-w-[800px] bg-white p-8 text-slate-900 shadow-2xl md:p-10"
+                  className="mx-auto min-h-[900px] w-full min-w-0 max-w-[800px] break-words bg-white p-4 text-slate-900 shadow-2xl sm:p-6 md:p-10"
                 >
 
                   {/* NAME */}
 
-                  <h1 className="text-3xl font-bold tracking-tight">
+                  <h1 className="break-words text-2xl font-bold tracking-tight sm:text-3xl">
                     {resume.personal.name ||
                       "Your Name"}
                   </h1>
 
-                  <p className="mt-2 text-xs text-slate-500">
+                  <p className="mt-2 break-words text-xs text-slate-500">
 
                     {[
                       resume.personal.email,
@@ -887,7 +879,7 @@ const ResumeBuilder = () => {
 
                   </p>
 
-                  <p className="mt-1 text-xs text-slate-500">
+                  <p className="mt-1 break-words text-xs text-slate-500">
 
                     {[
                       resume.personal.linkedin,
@@ -897,7 +889,6 @@ const ResumeBuilder = () => {
                       .join("  •  ")}
 
                   </p>
-
 
                   {/* SUMMARY */}
 
@@ -910,7 +901,6 @@ const ResumeBuilder = () => {
 
                     </ResumeSection>
                   )}
-
 
                   {/* SKILLS */}
 
@@ -950,7 +940,6 @@ const ResumeBuilder = () => {
                     </ResumeSection>
                   )}
 
-
                   {/* EDUCATION */}
 
                   {resume.education.some(
@@ -971,7 +960,7 @@ const ResumeBuilder = () => {
                               className="mb-3"
                             >
 
-                              <div className="flex justify-between">
+                              <div className="flex flex-wrap justify-between gap-x-3 gap-y-1">
 
                                 <b className="text-sm">
                                   {item.degree}
@@ -1000,7 +989,6 @@ const ResumeBuilder = () => {
                     </ResumeSection>
                   )}
 
-
                   {/* EXPERIENCE */}
 
                   {resume.experience.some(
@@ -1021,7 +1009,7 @@ const ResumeBuilder = () => {
                               className="mb-4"
                             >
 
-                              <div className="flex justify-between">
+                              <div className="flex flex-wrap justify-between gap-x-3 gap-y-1">
 
                                 <b className="text-sm">
                                   {item.role}
@@ -1047,7 +1035,6 @@ const ResumeBuilder = () => {
 
                     </ResumeSection>
                   )}
-
 
                   {/* PROJECTS */}
 
