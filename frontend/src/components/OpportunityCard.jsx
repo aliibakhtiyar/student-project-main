@@ -1,3 +1,4 @@
+
 const OpportunityCard = ({ opportunity }) => {
   // ============================================
   // DETERMINE OPPORTUNITY TYPE
@@ -118,20 +119,20 @@ const OpportunityCard = ({ opportunity }) => {
 
 
   return (
-    <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition duration-200 hover:-translate-y-1 hover:border-slate-300 hover:shadow-lg">
+    <div className="group flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition duration-200 hover:-translate-y-1 hover:border-slate-300 hover:shadow-lg">
 
       {/* ================================================= */}
       {/* HEADER */}
       {/* ================================================= */}
 
-      <div className="border-b border-slate-100 bg-slate-950 p-5">
+      <div className="border-b border-slate-100 bg-slate-950 p-4 sm:p-5">
 
-        <div className="flex items-start justify-between gap-3">
+        <div className="flex items-start justify-between gap-2 sm:gap-3">
 
           {/* Title + Company */}
           <div className="min-w-0 flex-1">
 
-            <h3 className="line-clamp-2 min-h-[48px] text-base font-bold leading-6 text-white">
+            <h3 className="line-clamp-2 min-h-[48px] break-words text-base font-bold leading-6 text-white">
               {title}
             </h3>
 
@@ -144,7 +145,7 @@ const OpportunityCard = ({ opportunity }) => {
 
           {/* Type Badge */}
           <span
-            className={`shrink-0 rounded-full px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider ${
+            className={`shrink-0 rounded-full px-2 py-1 sm:px-2.5 text-[9px] font-bold uppercase tracking-wider ${
               isInternship
                 ? "bg-emerald-400/10 text-emerald-300"
                 : "bg-white/10 text-slate-300"
@@ -162,24 +163,24 @@ const OpportunityCard = ({ opportunity }) => {
       {/* DETAILS */}
       {/* ================================================= */}
 
-      <div className="flex flex-1 flex-col p-5">
+      <div className="flex min-w-0 flex-1 flex-col p-4 sm:p-5">
 
 
         {/* ================================================= */}
         {/* INFO GRID */}
         {/* ================================================= */}
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-2 sm:gap-3">
 
 
           {/* LOCATION */}
-          <div className="rounded-xl bg-slate-50 p-3">
+          <div className="min-w-0 rounded-xl bg-slate-50 p-2.5 sm:p-3">
 
             <p className="text-[9px] font-bold uppercase tracking-wider text-slate-400">
               Location
             </p>
 
-            <p className="mt-1.5 truncate text-xs font-semibold text-slate-700">
+            <p className="mt-1.5 break-words text-xs font-semibold text-slate-700">
               {location}
             </p>
 
@@ -187,13 +188,13 @@ const OpportunityCard = ({ opportunity }) => {
 
 
           {/* SALARY */}
-          <div className="rounded-xl bg-slate-50 p-3">
+          <div className="min-w-0 rounded-xl bg-slate-50 p-2.5 sm:p-3">
 
             <p className="text-[9px] font-bold uppercase tracking-wider text-slate-400">
               Salary
             </p>
 
-            <p className="mt-1.5 truncate text-xs font-semibold text-slate-700">
+            <p className="mt-1.5 break-words text-xs font-semibold text-slate-700">
               {salary}
             </p>
 
@@ -201,13 +202,13 @@ const OpportunityCard = ({ opportunity }) => {
 
 
           {/* EXPERIENCE */}
-          <div className="rounded-xl bg-slate-50 p-3">
+          <div className="min-w-0 rounded-xl bg-slate-50 p-2.5 sm:p-3">
 
             <p className="text-[9px] font-bold uppercase tracking-wider text-slate-400">
               Experience
             </p>
 
-            <p className="mt-1.5 truncate text-xs font-semibold text-slate-700">
+            <p className="mt-1.5 break-words text-xs font-semibold text-slate-700">
               {experience}
             </p>
 
@@ -215,13 +216,13 @@ const OpportunityCard = ({ opportunity }) => {
 
 
           {/* WORK TYPE */}
-          <div className="rounded-xl bg-slate-50 p-3">
+          <div className="min-w-0 rounded-xl bg-slate-50 p-2.5 sm:p-3">
 
             <p className="text-[9px] font-bold uppercase tracking-wider text-slate-400">
               Work Type
             </p>
 
-            <p className="mt-1.5 truncate text-xs font-semibold text-slate-700">
+            <p className="mt-1.5 break-words text-xs font-semibold text-slate-700">
               {workType}
             </p>
 
@@ -236,13 +237,13 @@ const OpportunityCard = ({ opportunity }) => {
 
         {description && (
 
-          <div className="mt-5">
+          <div className="mt-5 min-w-0">
 
             <p className="text-[9px] font-bold uppercase tracking-wider text-slate-400">
               About opportunity
             </p>
 
-            <p className="mt-2 line-clamp-3 text-xs leading-5 text-slate-500">
+            <p className="mt-2 line-clamp-3 break-words text-xs leading-5 text-slate-500">
               {description}
             </p>
 
@@ -257,13 +258,13 @@ const OpportunityCard = ({ opportunity }) => {
 
         {skills && (
 
-          <div className="mt-4">
+          <div className="mt-4 min-w-0">
 
             <p className="text-[9px] font-bold uppercase tracking-wider text-slate-400">
               Skills
             </p>
 
-            <p className="mt-2 line-clamp-2 text-xs leading-5 text-slate-500">
+            <p className="mt-2 line-clamp-2 break-words text-xs leading-5 text-slate-500">
               {skills}
             </p>
 
@@ -279,11 +280,11 @@ const OpportunityCard = ({ opportunity }) => {
         <div className="mt-auto border-t border-slate-100 pt-4">
 
 
-          <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center justify-between gap-2 sm:gap-3">
 
 
             {/* Posted */}
-            <div>
+            <div className="min-w-0">
 
               <p className="text-[9px] font-bold uppercase tracking-wider text-slate-400">
                 Posted
@@ -304,7 +305,7 @@ const OpportunityCard = ({ opportunity }) => {
                 href={applyUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="shrink-0 rounded-xl bg-slate-950 px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-slate-800"
+                className="shrink-0 rounded-xl bg-slate-950 px-3 sm:px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-slate-800"
               >
                 Apply →
               </a>
@@ -313,7 +314,7 @@ const OpportunityCard = ({ opportunity }) => {
 
               <button
                 disabled
-                className="shrink-0 cursor-not-allowed rounded-xl bg-slate-200 px-4 py-2.5 text-xs font-semibold text-slate-400"
+                className="shrink-0 cursor-not-allowed rounded-xl bg-slate-200 px-3 sm:px-4 py-2.5 text-xs font-semibold text-slate-400"
               >
                 No Link
               </button>
