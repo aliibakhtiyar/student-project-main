@@ -1,3 +1,4 @@
+
 import { useAuth } from "../context/AuthContext";
 
 const Navbar = ({ setMobileOpen }) => {
@@ -7,16 +8,16 @@ const Navbar = ({ setMobileOpen }) => {
     user?.name?.charAt(0)?.toUpperCase() || "S";
 
   return (
-    <header className="sticky top-0 z-30 flex h-20 items-center justify-between border-b border-slate-800 bg-slate-950 px-4 md:px-8">
+    <header className="sticky top-0 z-30 flex h-20 w-full min-w-0 items-center justify-between gap-2 border-b border-slate-800 bg-slate-950 px-3 sm:px-4 md:px-8">
 
       {/* ================= LEFT ================= */}
-      <div className="flex items-center gap-4">
+      <div className="flex min-w-0 items-center gap-2 sm:gap-4">
 
         {/* Mobile Menu */}
         <button
           type="button"
           onClick={() => setMobileOpen?.(true)}
-          className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-800 text-lg text-slate-400 transition hover:bg-white/5 hover:text-white lg:hidden"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-800 text-lg text-slate-400 transition hover:bg-white/5 hover:text-white lg:hidden"
         >
           ☰
         </button>
@@ -40,12 +41,12 @@ const Navbar = ({ setMobileOpen }) => {
       </div>
 
       {/* ================= RIGHT ================= */}
-      <div className="flex items-center gap-4">
+      <div className="flex shrink-0 items-center gap-2 sm:gap-4">
 
         {/* Notification */}
         <button
           type="button"
-          className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-slate-800 text-slate-400 transition hover:bg-white/5 hover:text-white"
+          className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-800 text-slate-400 transition hover:bg-white/5 hover:text-white"
           title="Notifications"
         >
           ♢
@@ -58,7 +59,7 @@ const Navbar = ({ setMobileOpen }) => {
         <div className="hidden h-8 w-px bg-slate-800 sm:block" />
 
         {/* User */}
-        <div className="flex items-center gap-3">
+        <div className="flex min-w-0 items-center gap-2 sm:gap-3">
 
           {/* Avatar */}
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-sm font-bold text-slate-950">
@@ -66,7 +67,7 @@ const Navbar = ({ setMobileOpen }) => {
           </div>
 
           {/* User Details */}
-          <div className="hidden sm:block">
+          <div className="hidden min-w-0 sm:block">
 
             <p className="max-w-32 truncate text-sm font-semibold text-white">
               {user?.name || "Student"}
