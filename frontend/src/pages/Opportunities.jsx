@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -131,18 +132,19 @@ const Opportunities = () => {
   };
 
   return (
-    <div className="min-h-full bg-[#070B14] text-white">
-      <div className="mx-auto max-w-7xl">
+    <div className="min-h-full w-full min-w-0 overflow-x-hidden bg-[#070B14] text-white">
+
+      <div className="mx-auto w-full max-w-7xl">
 
         {/* ================= HEADER ================= */}
 
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
 
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-indigo-400">
             Career
           </p>
 
-          <h1 className="mt-3 text-3xl font-bold tracking-tight text-white md:text-4xl">
+          <h1 className="mt-3 break-words text-2xl font-bold tracking-tight text-white sm:text-3xl md:text-4xl">
             Opportunities
           </h1>
 
@@ -157,12 +159,13 @@ const Opportunities = () => {
 
         <form
           onSubmit={handleSearch}
-          className="mb-8 rounded-2xl border border-slate-800 bg-[#0B111D] p-3"
+          className="mb-6 rounded-2xl border border-slate-800 bg-[#0B111D] p-3 sm:mb-8 sm:p-4"
         >
-          <div className="flex flex-col gap-3 md:flex-row">
+          <div className="flex min-w-0 flex-col gap-3 md:flex-row">
 
             {/* Search */}
-            <div className="relative flex-1">
+
+            <div className="relative min-w-0 flex-1">
 
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-lg text-slate-500">
                 ⌕
@@ -181,12 +184,13 @@ const Opportunities = () => {
             </div>
 
             {/* Filter */}
+
             <select
               value={type}
               onChange={(e) =>
                 setType(e.target.value)
               }
-              className="rounded-xl border border-slate-800 bg-[#0D1320] px-4 py-3 text-sm text-slate-300 outline-none transition focus:border-indigo-500"
+              className="w-full rounded-xl border border-slate-800 bg-[#0D1320] px-4 py-3 text-sm text-slate-300 outline-none transition focus:border-indigo-500 md:w-auto md:min-w-[140px]"
             >
               <option
                 value="all"
@@ -211,9 +215,10 @@ const Opportunities = () => {
             </select>
 
             {/* Search Button */}
+
             <button
               type="submit"
-              className="rounded-xl bg-indigo-600 px-7 py-3 text-sm font-semibold text-white transition hover:bg-indigo-500"
+              className="w-full shrink-0 rounded-xl bg-indigo-600 px-7 py-3 text-sm font-semibold text-white transition hover:bg-indigo-500 md:w-auto"
             >
               Search
             </button>
@@ -223,13 +228,14 @@ const Opportunities = () => {
 
         {/* ================= COUNT ================= */}
 
-        <div className="mb-5 flex items-center gap-3">
+        <div className="mb-5 flex min-w-0 items-center gap-3">
 
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-indigo-500/20 bg-indigo-500/10 text-sm text-indigo-400">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-indigo-500/20 bg-indigo-500/10 text-sm text-indigo-400">
             ◆
           </div>
 
-          <div>
+          <div className="min-w-0">
+
             <p className="text-sm font-semibold text-slate-200">
               {opportunities.length} Opportunities
             </p>
@@ -237,6 +243,7 @@ const Opportunities = () => {
             <p className="text-xs text-slate-600">
               Jobs & internships available
             </p>
+
           </div>
 
         </div>
@@ -245,13 +252,13 @@ const Opportunities = () => {
 
         {loading ? (
 
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3">
 
             {[1, 2, 3, 4, 5, 6].map(
               (item) => (
                 <div
                   key={item}
-                  className="h-[390px] animate-pulse rounded-2xl border border-slate-800 bg-[#0B111D] p-5"
+                  className="h-[390px] animate-pulse rounded-2xl border border-slate-800 bg-[#0B111D] p-4 sm:p-5"
                 >
                   <div className="h-5 w-3/4 rounded bg-slate-800" />
 
@@ -279,7 +286,7 @@ const Opportunities = () => {
 
           /* ================= NO RESULTS ================= */
 
-          <div className="rounded-2xl border border-dashed border-slate-800 bg-[#0B111D] py-20 text-center">
+          <div className="rounded-2xl border border-dashed border-slate-800 bg-[#0B111D] px-4 py-16 text-center sm:py-20">
 
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl border border-indigo-500/20 bg-indigo-500/10 text-xl text-indigo-400">
               ◆
@@ -299,7 +306,7 @@ const Opportunities = () => {
 
           /* ================= CARDS ================= */
 
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3">
 
             {opportunities.map(
               (opportunity) => (
