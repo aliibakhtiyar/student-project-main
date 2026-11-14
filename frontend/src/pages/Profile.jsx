@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -113,33 +114,35 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-full bg-[#070B14] text-white">
+    <div className="min-h-full w-full min-w-0 overflow-x-hidden bg-[#070B14] text-white">
 
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto w-full max-w-6xl">
 
         {/* ================= HEADER ================= */}
 
-        <div className="mb-8 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+        <div className="mb-6 flex min-w-0 flex-col justify-between gap-4 sm:mb-8 sm:flex-row sm:items-end">
 
-          <div>
+          <div className="min-w-0">
+
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-indigo-400">
               Account
             </p>
 
-            <h1 className="mt-2 text-3xl font-bold tracking-tight text-white">
+            <h1 className="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">
               Profile
             </h1>
 
-            <p className="mt-2 text-sm text-slate-500">
+            <p className="mt-2 max-w-xl text-sm leading-6 text-slate-500">
               Manage your student profile and account information.
             </p>
+
           </div>
 
           {!editing && (
             <button
               type="button"
               onClick={handleEdit}
-              className="rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-indigo-500"
+              className="w-full shrink-0 rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-indigo-500 sm:w-auto"
             >
               Edit Profile
             </button>
@@ -151,12 +154,12 @@ const Profile = () => {
 
         <form
           onSubmit={handleSubmit}
-          className="overflow-hidden rounded-2xl border border-slate-800 bg-[#0B111D] shadow-sm"
+          className="min-w-0 overflow-hidden rounded-2xl border border-slate-800 bg-[#0B111D] shadow-sm"
         >
 
           {/* ================= COVER ================= */}
 
-          <div className="relative h-32 bg-[#111827]">
+          <div className="relative h-28 bg-[#111827] sm:h-32">
 
             {/* subtle decoration */}
 
@@ -166,39 +169,37 @@ const Profile = () => {
 
             {/* Avatar */}
 
-            <div className="absolute left-6 top-20 flex h-20 w-20 items-center justify-center rounded-2xl border-4 border-[#0B111D] bg-indigo-600 text-2xl font-bold text-white shadow-lg md:left-8">
-
+            <div className="absolute left-4 top-16 flex h-20 w-20 items-center justify-center rounded-2xl border-4 border-[#0B111D] bg-indigo-600 text-2xl font-bold text-white shadow-lg sm:left-6 sm:top-20 md:left-8">
               {firstLetter}
-
             </div>
 
           </div>
 
           {/* ================= PROFILE INFO ================= */}
 
-          <div className="px-6 pb-8 pt-14 md:px-8">
+          <div className="px-4 pb-6 pt-14 sm:px-6 sm:pb-8 sm:pt-14 md:px-8">
 
             {/* NAME */}
 
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex min-w-0 flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 
-              <div>
+              <div className="min-w-0">
 
                 <div className="flex flex-wrap items-center gap-2">
 
-                  <h2 className="text-xl font-bold text-white">
+                  <h2 className="break-words text-lg font-bold text-white sm:text-xl">
                     {user?.name || "Student"}
                   </h2>
 
                   {user?.isStudentVerified && (
-                    <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-bold text-emerald-400">
+                    <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-bold text-emerald-400">
                       ✓ Verified
                     </span>
                   )}
 
                 </div>
 
-                <p className="mt-1 text-sm text-slate-500">
+                <p className="mt-1 break-words text-sm text-slate-500">
                   {user?.institute || "Institute not added"}
                 </p>
 
@@ -206,7 +207,7 @@ const Profile = () => {
 
             </div>
 
-            <div className="my-7 h-px bg-slate-800" />
+            <div className="my-6 h-px bg-slate-800 sm:my-7" />
 
             {/* ================= BASIC INFORMATION ================= */}
 
@@ -216,11 +217,11 @@ const Profile = () => {
                 Basic information
               </h3>
 
-              <div className="mt-4 grid gap-4 md:grid-cols-2">
+              <div className="mt-4 grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
 
                 {/* FULL NAME */}
 
-                <div className="rounded-xl border border-slate-800 bg-[#0D1320] p-4">
+                <div className="min-w-0 rounded-xl border border-slate-800 bg-[#0D1320] p-3.5 sm:p-4">
 
                   <label className="text-xs text-slate-500">
                     Full name
@@ -233,10 +234,10 @@ const Profile = () => {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="Your full name"
-                      className="mt-2 w-full rounded-lg border border-slate-700 bg-[#070B14] px-3 py-2.5 text-sm font-medium text-white outline-none transition placeholder:text-slate-600 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+                      className="mt-2 w-full min-w-0 rounded-lg border border-slate-700 bg-[#070B14] px-3 py-2.5 text-sm font-medium text-white outline-none transition placeholder:text-slate-600 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
                     />
                   ) : (
-                    <p className="mt-1 text-sm font-semibold text-slate-200">
+                    <p className="mt-1 break-words text-sm font-semibold text-slate-200">
                       {user?.name || "Not available"}
                     </p>
                   )}
@@ -245,15 +246,15 @@ const Profile = () => {
 
                 {/* COLLEGE EMAIL */}
 
-                <div className="rounded-xl border border-slate-800 bg-[#0D1320] p-4">
+                <div className="min-w-0 rounded-xl border border-slate-800 bg-[#0D1320] p-3.5 sm:p-4">
 
-                  <div className="flex gap-3">
+                  <div className="flex min-w-0 gap-3">
 
-                    <span className="mt-0.5 text-lg text-slate-500">
+                    <span className="mt-0.5 shrink-0 text-lg text-slate-500">
                       ✉
                     </span>
 
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
 
                       <p className="text-xs text-slate-500">
                         College email
@@ -275,13 +276,13 @@ const Profile = () => {
 
                 {/* INSTITUTE */}
 
-                <div className="rounded-xl border border-slate-800 bg-[#0D1320] p-4">
+                <div className="min-w-0 rounded-xl border border-slate-800 bg-[#0D1320] p-3.5 sm:p-4">
 
                   <label className="text-xs text-slate-500">
                     Institute
                   </label>
 
-                  <p className="mt-1 text-sm font-semibold text-slate-200">
+                  <p className="mt-1 break-words text-sm font-semibold text-slate-200">
                     {user?.institute || "Not added"}
                   </p>
 
@@ -293,7 +294,7 @@ const Profile = () => {
 
                 {/* DEPARTMENT */}
 
-                <div className="rounded-xl border border-slate-800 bg-[#0D1320] p-4">
+                <div className="min-w-0 rounded-xl border border-slate-800 bg-[#0D1320] p-3.5 sm:p-4">
 
                   <label className="text-xs text-slate-500">
                     Department
@@ -306,10 +307,10 @@ const Profile = () => {
                       value={formData.department}
                       onChange={handleChange}
                       placeholder="e.g. Computer Science"
-                      className="mt-2 w-full rounded-lg border border-slate-700 bg-[#070B14] px-3 py-2.5 text-sm font-medium text-white outline-none transition placeholder:text-slate-600 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+                      className="mt-2 w-full min-w-0 rounded-lg border border-slate-700 bg-[#070B14] px-3 py-2.5 text-sm font-medium text-white outline-none transition placeholder:text-slate-600 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
                     />
                   ) : (
-                    <p className="mt-1 text-sm font-semibold text-slate-200">
+                    <p className="mt-1 break-words text-sm font-semibold text-slate-200">
                       {user?.department || "Not added"}
                     </p>
                   )}
@@ -318,7 +319,7 @@ const Profile = () => {
 
                 {/* YEAR */}
 
-                <div className="rounded-xl border border-slate-800 bg-[#0D1320] p-4">
+                <div className="min-w-0 rounded-xl border border-slate-800 bg-[#0D1320] p-3.5 sm:p-4">
 
                   <label className="text-xs text-slate-500">
                     Academic year
@@ -329,7 +330,7 @@ const Profile = () => {
                       name="year"
                       value={formData.year}
                       onChange={handleChange}
-                      className="mt-2 w-full rounded-lg border border-slate-700 bg-[#070B14] px-3 py-2.5 text-sm font-medium text-white outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+                      className="mt-2 w-full min-w-0 rounded-lg border border-slate-700 bg-[#070B14] px-3 py-2.5 text-sm font-medium text-white outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
                     >
                       <option value="">
                         Select year
@@ -354,7 +355,7 @@ const Profile = () => {
 
                 {/* SEMESTER */}
 
-                <div className="rounded-xl border border-slate-800 bg-[#0D1320] p-4">
+                <div className="min-w-0 rounded-xl border border-slate-800 bg-[#0D1320] p-3.5 sm:p-4">
 
                   <label className="text-xs text-slate-500">
                     Semester
@@ -365,7 +366,7 @@ const Profile = () => {
                       name="semester"
                       value={formData.semester}
                       onChange={handleChange}
-                      className="mt-2 w-full rounded-lg border border-slate-700 bg-[#070B14] px-3 py-2.5 text-sm font-medium text-white outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+                      className="mt-2 w-full min-w-0 rounded-lg border border-slate-700 bg-[#070B14] px-3 py-2.5 text-sm font-medium text-white outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
                     >
                       <option value="">
                         Select semester
@@ -399,17 +400,17 @@ const Profile = () => {
 
             {/* ================= SOCIAL PROFILES ================= */}
 
-            <div className="mt-8">
+            <div className="mt-7 sm:mt-8">
 
               <h3 className="text-sm font-bold text-white">
                 Social profiles
               </h3>
 
-              <div className="mt-4 grid gap-4 md:grid-cols-2">
+              <div className="mt-4 grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
 
                 {/* GITHUB */}
 
-                <div className="rounded-xl border border-slate-800 bg-[#0D1320] p-4">
+                <div className="min-w-0 rounded-xl border border-slate-800 bg-[#0D1320] p-3.5 sm:p-4">
 
                   <label className="text-xs text-slate-500">
                     GitHub
@@ -422,7 +423,7 @@ const Profile = () => {
                       value={formData.github}
                       onChange={handleChange}
                       placeholder="https://github.com/username"
-                      className="mt-2 w-full rounded-lg border border-slate-700 bg-[#070B14] px-3 py-2.5 text-sm font-medium text-white outline-none transition placeholder:text-slate-600 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+                      className="mt-2 w-full min-w-0 rounded-lg border border-slate-700 bg-[#070B14] px-3 py-2.5 text-sm font-medium text-white outline-none transition placeholder:text-slate-600 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
                     />
                   ) : user?.github ? (
                     <a
@@ -443,7 +444,7 @@ const Profile = () => {
 
                 {/* LINKEDIN */}
 
-                <div className="rounded-xl border border-slate-800 bg-[#0D1320] p-4">
+                <div className="min-w-0 rounded-xl border border-slate-800 bg-[#0D1320] p-3.5 sm:p-4">
 
                   <label className="text-xs text-slate-500">
                     LinkedIn
@@ -456,7 +457,7 @@ const Profile = () => {
                       value={formData.linkedin}
                       onChange={handleChange}
                       placeholder="https://linkedin.com/in/username"
-                      className="mt-2 w-full rounded-lg border border-slate-700 bg-[#070B14] px-3 py-2.5 text-sm font-medium text-white outline-none transition placeholder:text-slate-600 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
+                      className="mt-2 w-full min-w-0 rounded-lg border border-slate-700 bg-[#070B14] px-3 py-2.5 text-sm font-medium text-white outline-none transition placeholder:text-slate-600 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
                     />
                   ) : user?.linkedin ? (
                     <a
@@ -482,13 +483,13 @@ const Profile = () => {
             {/* ================= ACTION BUTTONS ================= */}
 
             {editing && (
-              <div className="mt-8 flex justify-end gap-3 border-t border-slate-800 pt-6">
+              <div className="mt-7 flex flex-col-reverse gap-3 border-t border-slate-800 pt-6 sm:mt-8 sm:flex-row sm:justify-end">
 
                 <button
                   type="button"
                   onClick={handleCancel}
                   disabled={saving}
-                  className="rounded-xl border border-slate-700 bg-transparent px-5 py-3 text-sm font-semibold text-slate-400 transition hover:bg-slate-800 hover:text-white disabled:opacity-50"
+                  className="w-full rounded-xl border border-slate-700 bg-transparent px-5 py-3 text-sm font-semibold text-slate-400 transition hover:bg-slate-800 hover:text-white disabled:opacity-50 sm:w-auto"
                 >
                   Cancel
                 </button>
@@ -496,7 +497,7 @@ const Profile = () => {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="rounded-xl bg-indigo-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="w-full rounded-xl bg-indigo-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
                 >
                   {saving
                     ? "Saving..."
