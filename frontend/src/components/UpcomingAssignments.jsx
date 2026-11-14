@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { ClipboardList, RefreshCw } from "lucide-react";
 import AssignmentCard from "./AssignmentCard";
@@ -42,24 +43,25 @@ const UpcomingAssignments = () => {
   }, []);
 
   return (
-    <div>
+    <div className="min-w-0 w-full">
 
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center
-      sm:justify-between gap-4 mb-5">
+      <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 
-        <div>
+        <div className="min-w-0">
 
-          <h2 className="text-2xl font-bold flex items-center gap-2">
+          <h2 className="flex items-center gap-2 text-xl sm:text-2xl font-bold">
             <ClipboardList
               size={25}
-              className="text-indigo-400"
+              className="shrink-0 text-indigo-400"
             />
 
-            Upcoming Assignments
+            <span>
+              Upcoming Assignments
+            </span>
           </h2>
 
-          <p className="text-slate-400 text-sm mt-1">
+          <p className="mt-1 text-sm text-slate-400">
             Assignments collected from your Google Classroom
           </p>
 
@@ -69,9 +71,7 @@ const UpcomingAssignments = () => {
         <button
           onClick={fetchAssignments}
           disabled={loading}
-          className="flex items-center justify-center gap-2
-          px-4 py-2 rounded-xl bg-slate-800
-          hover:bg-slate-700 border border-slate-700 transition"
+          className="flex w-full sm:w-auto shrink-0 items-center justify-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 transition"
         >
           <RefreshCw
             size={16}
@@ -86,8 +86,7 @@ const UpcomingAssignments = () => {
 
       {/* Error */}
       {error && (
-        <div className="p-4 mb-5 rounded-xl bg-red-500/10
-        border border-red-500/20 text-red-300">
+        <div className="p-3 sm:p-4 mb-5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-300 break-words">
           {error}
         </div>
       )}
@@ -95,13 +94,12 @@ const UpcomingAssignments = () => {
 
       {/* Loading */}
       {loading && (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
 
           {[1, 2, 3].map((item) => (
             <div
               key={item}
-              className="h-64 rounded-2xl bg-slate-900
-              border border-slate-800 animate-pulse"
+              className="h-64 rounded-2xl bg-slate-900 border border-slate-800 animate-pulse"
             />
           ))}
 
@@ -111,8 +109,7 @@ const UpcomingAssignments = () => {
 
       {/* Empty */}
       {!loading && !error && assignments.length === 0 && (
-        <div className="p-10 text-center rounded-2xl
-        bg-slate-900 border border-slate-800">
+        <div className="p-6 sm:p-10 text-center rounded-2xl bg-slate-900 border border-slate-800">
 
           <ClipboardList
             size={40}
@@ -123,7 +120,7 @@ const UpcomingAssignments = () => {
             No upcoming assignments
           </h3>
 
-          <p className="text-slate-400 mt-2">
+          <p className="text-slate-400 mt-2 text-sm">
             You don't have any upcoming assignments.
           </p>
 
@@ -133,7 +130,7 @@ const UpcomingAssignments = () => {
 
       {/* Assignments */}
       {!loading && assignments.length > 0 && (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
 
           {assignments.map((assignment) => (
             <AssignmentCard
