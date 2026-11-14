@@ -8,10 +8,10 @@ const Navbar = ({ setMobileOpen }) => {
     user?.name?.charAt(0)?.toUpperCase() || "S";
 
   return (
-    <header className="sticky top-0 z-30 flex h-20 w-full min-w-0 items-center justify-between gap-2 border-b border-slate-800 bg-slate-950 px-3 sm:px-4 md:px-8">
+    <header className="sticky top-0 z-30 flex h-20 w-full min-w-0 items-center justify-between gap-2 border-b border-slate-800 bg-slate-950 px-2.5 min-[375px]:px-3 sm:px-4 md:px-8">
 
       {/* ================= LEFT ================= */}
-      <div className="flex min-w-0 items-center gap-2 sm:gap-4">
+      <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-4">
 
         {/* Mobile Menu */}
         <button
@@ -41,7 +41,7 @@ const Navbar = ({ setMobileOpen }) => {
       </div>
 
       {/* ================= RIGHT ================= */}
-      <div className="flex shrink-0 items-center gap-2 sm:gap-4">
+      <div className="flex shrink-0 items-center gap-1.5 min-[375px]:gap-2 sm:gap-4">
 
         {/* Notification */}
         <button
