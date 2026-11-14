@@ -1,3 +1,4 @@
+
 import {
   CalendarDays,
   ExternalLink,
@@ -39,23 +40,23 @@ const AssignmentCard = ({ assignment }) => {
   };
 
   return (
-    <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800
+    <div className="min-w-0 p-4 sm:p-5 rounded-2xl bg-slate-900 border border-slate-800
     hover:border-indigo-500/40 transition">
 
-      <div className="flex justify-between items-start gap-4">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 sm:gap-4 min-w-0">
 
-        <div>
-          <p className="text-sm text-indigo-400 font-medium">
+        <div className="min-w-0">
+          <p className="text-sm text-indigo-400 font-medium break-words">
             {assignment.courseName}
           </p>
 
-          <h3 className="text-lg font-semibold mt-2">
+          <h3 className="text-lg font-semibold mt-2 break-words">
             {assignment.title}
           </h3>
         </div>
 
         <span
-          className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full
+          className={`flex w-fit shrink-0 items-center gap-1.5 px-2.5 py-1 rounded-full
           text-xs font-medium ${status.className}`}
         >
           <StatusIcon size={14} />
@@ -66,7 +67,7 @@ const AssignmentCard = ({ assignment }) => {
 
 
       {assignment.description && (
-        <p className="text-sm text-slate-400 mt-4 line-clamp-3">
+        <p className="text-sm text-slate-400 mt-4 line-clamp-3 break-words">
           {assignment.description}
         </p>
       )}
@@ -74,9 +75,9 @@ const AssignmentCard = ({ assignment }) => {
 
       <div className="mt-5 space-y-3">
 
-        <div className="flex items-center gap-2 text-sm text-slate-400">
-          <CalendarDays size={17} />
-          <span>
+        <div className="flex items-start gap-2 text-sm text-slate-400 min-w-0">
+          <CalendarDays size={17} className="shrink-0 mt-0.5" />
+          <span className="break-words min-w-0">
             {formatDate(assignment.dueDate)}
           </span>
         </div>
@@ -110,11 +111,11 @@ const AssignmentCard = ({ assignment }) => {
           target="_blank"
           rel="noreferrer"
           className="mt-5 w-full flex items-center justify-center gap-2
-          px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500
-          transition text-sm font-medium"
+          px-3 sm:px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500
+          transition text-sm font-medium text-center"
         >
           Open in Google Classroom
-          <ExternalLink size={16} />
+          <ExternalLink size={16} className="shrink-0" />
         </a>
       )}
 
