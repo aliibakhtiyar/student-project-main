@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -42,17 +43,19 @@ const Hackathons = () => {
   }, []);
 
   return (
-    <div className="min-h-full bg-[#070B14] text-white">
-      <div className="mx-auto max-w-7xl px-1 py-2">
+    <div className="min-h-full w-full min-w-0 overflow-x-hidden bg-[#070B14] text-white">
+
+      <div className="mx-auto w-full max-w-7xl px-1 py-2 sm:px-2">
 
         {/* ================= HEADER ================= */}
-        <div className="mb-8">
+
+        <div className="mb-6 sm:mb-8">
 
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-indigo-400">
             Build & Compete
           </p>
 
-          <h1 className="mt-3 text-3xl font-bold tracking-tight text-white md:text-4xl">
+          <h1 className="mt-3 break-words text-2xl font-bold tracking-tight text-white sm:text-3xl md:text-4xl">
             Hackathons
           </h1>
 
@@ -64,9 +67,10 @@ const Hackathons = () => {
         </div>
 
         {/* ================= SEARCH ================= */}
-        <div className="mb-8 flex flex-col gap-3 md:flex-row">
 
-          <div className="relative flex-1">
+        <div className="mb-6 flex min-w-0 flex-col gap-3 sm:mb-8 md:flex-row">
+
+          <div className="relative min-w-0 flex-1">
 
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-lg text-slate-500">
               ⌕
@@ -90,7 +94,7 @@ const Hackathons = () => {
           <button
             type="button"
             onClick={fetchHackathons}
-            className="rounded-xl bg-indigo-600 px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-indigo-500"
+            className="w-full shrink-0 rounded-xl bg-indigo-600 px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-indigo-500 md:w-auto"
           >
             Search
           </button>
@@ -98,13 +102,15 @@ const Hackathons = () => {
         </div>
 
         {/* ================= COUNT ================= */}
-        <div className="mb-5 flex items-center gap-3">
 
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-indigo-500/20 bg-indigo-500/10 text-sm text-indigo-400">
+        <div className="mb-5 flex min-w-0 items-center gap-3">
+
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-indigo-500/20 bg-indigo-500/10 text-sm text-indigo-400">
             ◆
           </div>
 
-          <div>
+          <div className="min-w-0">
+
             <p className="text-sm font-semibold text-slate-200">
               {hackathons.length} Hackathons
             </p>
@@ -112,14 +118,16 @@ const Hackathons = () => {
             <p className="text-xs text-slate-600">
               Opportunities available
             </p>
+
           </div>
 
         </div>
 
         {/* ================= LOADING ================= */}
+
         {loading ? (
 
-          <div className="rounded-2xl border border-slate-800 bg-[#0B111D] py-24 text-center">
+          <div className="rounded-2xl border border-slate-800 bg-[#0B111D] py-20 text-center sm:py-24">
 
             <div className="mx-auto h-8 w-8 animate-spin rounded-full border-2 border-slate-800 border-t-indigo-500" />
 
@@ -132,7 +140,8 @@ const Hackathons = () => {
         ) : hackathons.length === 0 ? (
 
           /* ================= EMPTY ================= */
-          <div className="rounded-2xl border border-dashed border-slate-800 bg-[#0B111D] p-16 text-center">
+
+          <div className="rounded-2xl border border-dashed border-slate-800 bg-[#0B111D] px-4 py-14 text-center sm:p-16">
 
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl border border-indigo-500/20 bg-indigo-500/10 text-xl text-indigo-400">
               ◆
@@ -151,7 +160,8 @@ const Hackathons = () => {
         ) : (
 
           /* ================= HACKATHON GRID ================= */
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+
+          <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3">
 
             {hackathons.map((hackathon, index) => (
               <HackathonCard
@@ -169,6 +179,7 @@ const Hackathons = () => {
         )}
 
       </div>
+
     </div>
   );
 };
