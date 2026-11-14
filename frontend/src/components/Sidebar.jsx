@@ -1,9 +1,15 @@
+
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Logo from "./Logo";
 
-const Sidebar = ({ collapsed, setCollapsed }) => {
+const Sidebar = ({
+  collapsed,
+  setCollapsed,
+  mobileOpen = false,
+  setMobileOpen,
+}) => {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
@@ -45,12 +51,16 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       path: "/resume-builder",
       icon: "▥",
     },
-    { name: "Public Profile", path: "/public-profile", icon: "◉" },
     {
-  name: "Quiz Practice",
-  path: "/quiz-practice",
-  icon: "𖡎",
-},
+      name: "Public Profile",
+      path: "/public-profile",
+      icon: "◉",
+    },
+    {
+      name: "Quiz Practice",
+      path: "/quiz-practice",
+      icon: "𖡎",
+    },
     {
       name: "Profile",
       path: "/profile",
@@ -61,14 +71,18 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
   const handleLogout = () => {
     logout();
     setShowLogoutModal(false);
+    setMobileOpen?.(false);
     navigate("/login");
+  };
+
+  const closeMobileSidebar = () => {
+    setMobileOpen?.(false);
   };
 
   // Collapsed sidebar ke blank area par click
   const handleSidebarClick = (e) => {
     if (!collapsed) return;
 
-    // Button ya link par click hua hai
     if (
       e.target.closest("a") ||
       e.target.closest("button")
@@ -76,18 +90,32 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       return;
     }
 
-    // Blank area par click
     setCollapsed(false);
   };
 
   return (
     <>
+      {/* ================= MOBILE OVERLAY ================= */}
+
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-slate-950/60 backdrop-blur-sm lg:hidden"
+          onClick={closeMobileSidebar}
+        />
+      )}
+
+      {/* ================= SIDEBAR ================= */}
+
       <aside
         onClick={handleSidebarClick}
-        className={`sticky top-0 flex h-screen shrink-0 flex-col border-r border-slate-800 bg-slate-950 transition-all duration-300 ${
+        className={`fixed inset-y-0 left-0 z-50 flex h-screen w-64 shrink-0 flex-col border-r border-slate-800 bg-slate-950 transition-all duration-300 lg:sticky lg:top-0 lg:z-auto lg:translate-x-0 ${
+          mobileOpen
+            ? "translate-x-0"
+            : "-translate-x-full lg:translate-x-0"
+        } ${
           collapsed
-            ? "w-[72px] cursor-pointer"
-            : "w-64"
+            ? "lg:w-[72px] lg:cursor-pointer"
+            : "lg:w-64"
         }`}
       >
         {/* ================= HEADER ================= */}
@@ -95,50 +123,67 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         <div
           className={`flex h-20 shrink-0 items-center border-b border-slate-800 ${
             collapsed
-              ? "justify-center"
+              ? "justify-between px-4 lg:justify-center lg:px-0"
               : "justify-between px-5"
           }`}
         >
           {collapsed ? (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setCollapsed(false);
-              }}
-              className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-600 text-lg font-bold text-white transition hover:bg-indigo-500"
-              title="Open sidebar"
-            >
-              U
-            </button>
-          ) : (
             <>
-              <Logo light />
-
               <button
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
-                  setCollapsed(true);
+                  setCollapsed(false);
                 }}
-                className="flex h-8 w-8 items-center justify-center rounded-lg text-lg text-slate-500 transition hover:bg-white/10 hover:text-white"
-                title="Collapse sidebar"
+                className="hidden h-10 w-10 items-center justify-center rounded-xl bg-indigo-600 text-lg font-bold text-white transition hover:bg-indigo-500 lg:flex"
+                title="Open sidebar"
               >
-                ←
+                U
               </button>
+
+              <div className="lg:hidden">
+                <Logo light />
+              </div>
             </>
+          ) : (
+            <Logo light />
           )}
+
+          {/* Desktop Collapse */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setCollapsed(!collapsed);
+            }}
+            className="hidden h-8 w-8 items-center justify-center rounded-lg text-lg text-slate-500 transition hover:bg-white/10 hover:text-white lg:flex"
+            title={collapsed ? "Open sidebar" : "Collapse sidebar"}
+          >
+            {collapsed ? "→" : "←"}
+          </button>
+
+          {/* Mobile Close */}
+          <button
+            type="button"
+            onClick={closeMobileSidebar}
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-xl text-slate-400 transition hover:bg-white/10 hover:text-white lg:hidden"
+            title="Close sidebar"
+          >
+            ×
+          </button>
         </div>
 
         {/* ================= NAVIGATION ================= */}
 
-        <div className="sidebar-scroll flex-1 overflow-y-auto px-3 py-6">
+        <div className="sidebar-scroll flex-1 overflow-y-auto overflow-x-hidden px-3 py-6">
 
-          {!collapsed && (
-            <p className="mb-3 px-3 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500">
-              Workspace
-            </p>
-          )}
+          <p
+            className={`mb-3 px-3 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500 ${
+              collapsed ? "lg:hidden" : ""
+            }`}
+          >
+            Workspace
+          </p>
 
           <nav className="space-y-1">
 
@@ -146,6 +191,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
               <NavLink
                 key={link.path}
                 to={link.path}
+                onClick={closeMobileSidebar}
                 title={
                   collapsed
                     ? link.name
@@ -154,7 +200,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
                 className={({ isActive }) =>
                   `group flex items-center rounded-xl py-3 text-sm font-medium transition ${
                     collapsed
-                      ? "justify-center px-2"
+                      ? "gap-3 px-3 lg:justify-center lg:px-2"
                       : "gap-3 px-3"
                   } ${
                     isActive
@@ -167,29 +213,33 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
                   {link.icon}
                 </span>
 
-                {!collapsed && (
-                  <span className="truncate">
-                    {link.name}
-                  </span>
-                )}
+                <span
+                  className={`truncate ${
+                    collapsed ? "lg:hidden" : ""
+                  }`}
+                >
+                  {link.name}
+                </span>
               </NavLink>
             ))}
 
           </nav>
 
-
           {/* ================= MORE ================= */}
 
           <div className="mt-9">
 
-            {!collapsed && (
-              <p className="mb-3 px-3 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500">
-                More
-              </p>
-            )}
+            <p
+              className={`mb-3 px-3 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500 ${
+                collapsed ? "lg:hidden" : ""
+              }`}
+            >
+              More
+            </p>
 
             <NavLink
               to="/ai-assistant"
+              onClick={closeMobileSidebar}
               title={
                 collapsed
                   ? "AI Assistant"
@@ -198,7 +248,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
               className={({ isActive }) =>
                 `group flex items-center rounded-xl py-3 text-sm font-medium transition ${
                   collapsed
-                    ? "justify-center px-2"
+                    ? "gap-3 px-3 lg:justify-center lg:px-2"
                     : "gap-3 px-3"
                 } ${
                   isActive
@@ -212,26 +262,27 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
                 ✦
               </span>
 
-              {!collapsed && (
-                <div className="flex min-w-0 flex-1 items-center justify-between gap-2">
+              <div
+                className={`flex min-w-0 flex-1 items-center justify-between gap-2 ${
+                  collapsed ? "lg:hidden" : ""
+                }`}
+              >
 
-                  <span className="truncate">
-                    AI Assistant
-                  </span>
+                <span className="truncate">
+                  AI Assistant
+                </span>
 
-                  <span className="rounded-full bg-indigo-500/10 px-2 py-1 text-[8px] font-bold tracking-wide text-indigo-400">
-                    AI
-                  </span>
+                <span className="rounded-full bg-indigo-500/10 px-2 py-1 text-[8px] font-bold tracking-wide text-indigo-400">
+                  AI
+                </span>
 
-                </div>
-              )}
+              </div>
 
             </NavLink>
 
           </div>
 
         </div>
-
 
         {/* ================= LOGOUT ================= */}
 
@@ -242,33 +293,33 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
 
           <button
             type="button"
-            onClick={() =>
-              setShowLogoutModal(true)
-            }
+            onClick={() => {
+              setShowLogoutModal(true);
+              closeMobileSidebar();
+            }}
             title="Logout"
             className={`flex w-full items-center rounded-xl py-3 text-sm font-medium text-slate-500 transition hover:bg-red-500/10 hover:text-red-400 ${
               collapsed
-                ? "justify-center"
+                ? "justify-center lg:justify-center"
                 : "gap-3 px-3"
             }`}
           >
 
-            <span className="text-base">
+            <span className="shrink-0 text-base">
               ↪
             </span>
 
-            {!collapsed && (
-              <span>
-                Logout
-              </span>
-            )}
+            <span
+              className={collapsed ? "lg:hidden" : ""}
+            >
+              Logout
+            </span>
 
           </button>
 
         </div>
 
       </aside>
-
 
       {/* ================= LOGOUT MODAL ================= */}
 
@@ -293,13 +344,11 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
               ↪
             </div>
 
-
             {/* Title */}
 
             <h2 className="mt-5 text-lg font-bold text-slate-950">
               Logout?
             </h2>
-
 
             {/* Description */}
 
@@ -307,7 +356,6 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
               Are you sure you want to logout from your
               UniSphere account?
             </p>
-
 
             {/* Buttons */}
 
@@ -322,7 +370,6 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
               >
                 Cancel
               </button>
-
 
               <button
                 type="button"
