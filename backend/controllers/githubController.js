@@ -131,7 +131,7 @@ const githubCallback = async (req, res) => {
     */
 
     return res.redirect(
-      "https://student-project-main.onrender.com/public-profile?github=connected"
+      "https://student-project-main-1.onrender.com/public-profile?github=connected"
     );
 
   } catch (error) {
