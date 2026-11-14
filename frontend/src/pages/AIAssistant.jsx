@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import {
@@ -296,12 +297,14 @@ const AIAssistant = () => {
   return (
     <div
       className="
+        flex
         h-[calc(100dvh-9rem)]
         min-h-0
+        w-full
+        min-w-0
+        overflow-hidden
         bg-slate-950
         text-white
-        flex
-        overflow-hidden
       "
     >
 
@@ -314,8 +317,8 @@ const AIAssistant = () => {
           className="
             fixed
             inset-0
-            bg-black/60
             z-40
+            bg-black/60
             lg:hidden
           "
           onClick={() =>
@@ -323,7 +326,6 @@ const AIAssistant = () => {
           }
         />
       )}
-
 
       {/* =====================================
           SIDEBAR
@@ -343,6 +345,7 @@ const AIAssistant = () => {
           min-h-0
 
           w-[280px]
+          max-w-[85vw]
 
           bg-slate-900
           border-r
@@ -386,6 +389,7 @@ const AIAssistant = () => {
                 flex
                 items-center
                 gap-3
+                min-w-0
               "
             >
 
@@ -393,6 +397,7 @@ const AIAssistant = () => {
                 className="
                   w-10
                   h-10
+                  shrink-0
                   rounded-xl
                   bg-indigo-600/20
                   border
@@ -408,9 +413,9 @@ const AIAssistant = () => {
                 />
               </div>
 
-              <div>
+              <div className="min-w-0">
 
-                <h2 className="font-semibold">
+                <h2 className="font-semibold truncate">
                   AI Assistant
                 </h2>
 
@@ -445,13 +450,13 @@ const AIAssistant = () => {
 
             </div>
 
-
             <button
               onClick={() =>
                 setSidebarOpen(false)
               }
               className="
                 lg:hidden
+                shrink-0
                 p-2
                 rounded-lg
                 hover:bg-slate-800
@@ -464,7 +469,6 @@ const AIAssistant = () => {
 
         </div>
 
-
         {/* =====================================
             SIDEBAR SCROLL AREA
         ====================================== */}
@@ -474,6 +478,7 @@ const AIAssistant = () => {
             flex-1
             min-h-0
             overflow-y-auto
+            overflow-x-hidden
             scrollbar-thin
             scrollbar-thumb-slate-700
             scrollbar-track-transparent
@@ -504,6 +509,7 @@ const AIAssistant = () => {
                 transition
 
                 font-medium
+                text-sm
               "
             >
               <Sparkles size={17} />
@@ -512,7 +518,6 @@ const AIAssistant = () => {
             </button>
 
           </div>
-
 
           {/* QUICK PROMPTS */}
 
@@ -563,6 +568,7 @@ const AIAssistant = () => {
                       <div
                         className="
                           p-2
+                          shrink-0
                           rounded-lg
                           bg-slate-800
                           group-hover:bg-indigo-500/10
@@ -577,7 +583,7 @@ const AIAssistant = () => {
                         />
                       </div>
 
-                      <div>
+                      <div className="min-w-0">
 
                         <p
                           className="
@@ -608,7 +614,6 @@ const AIAssistant = () => {
             </div>
 
           </div>
-
 
           {/* =====================================
               CHAT HISTORY
@@ -643,7 +648,6 @@ const AIAssistant = () => {
               />
 
             </div>
-
 
             {chatHistory.length === 0 ? (
 
@@ -719,6 +723,7 @@ const AIAssistant = () => {
                       <span
                         className="
                           truncate
+                          min-w-0
                         "
                       >
                         {chat.title}
@@ -736,7 +741,6 @@ const AIAssistant = () => {
           </div>
 
         </div>
-
 
         {/* SIDEBAR BOTTOM */}
 
@@ -802,7 +806,6 @@ const AIAssistant = () => {
 
       </aside>
 
-
       {/* =====================================
           MAIN CHAT
       ====================================== */}
@@ -812,6 +815,7 @@ const AIAssistant = () => {
           flex-1
           min-w-0
           min-h-0
+          w-full
           flex
           flex-col
           overflow-hidden
@@ -831,8 +835,10 @@ const AIAssistant = () => {
             flex
             items-center
             justify-between
-            px-4
+            px-3
+            sm:px-4
             md:px-6
+            gap-2
           "
         >
 
@@ -840,7 +846,9 @@ const AIAssistant = () => {
             className="
               flex
               items-center
-              gap-3
+              gap-2
+              sm:gap-3
+              min-w-0
             "
           >
 
@@ -850,6 +858,7 @@ const AIAssistant = () => {
               }
               className="
                 lg:hidden
+                shrink-0
                 p-2
                 rounded-lg
                 hover:bg-slate-800
@@ -858,14 +867,14 @@ const AIAssistant = () => {
               <Menu size={20} />
             </button>
 
-
-            <div>
+            <div className="min-w-0">
 
               <h1
                 className="
                   text-sm
                   md:text-base
                   font-semibold
+                  truncate
                 "
               >
                 Student AI Assistant
@@ -886,14 +895,15 @@ const AIAssistant = () => {
 
           </div>
 
-
           <button
             onClick={clearChat}
             className="
+              shrink-0
               flex
               items-center
               gap-2
-              px-3
+              px-2
+              sm:px-3
               py-2
               rounded-lg
               text-xs
@@ -912,7 +922,6 @@ const AIAssistant = () => {
 
         </header>
 
-
         {/* =====================================
             CHAT MESSAGES - ONLY THIS SCROLLS
         ====================================== */}
@@ -922,17 +931,21 @@ const AIAssistant = () => {
             flex-1
             min-h-0
             overflow-y-auto
+            overflow-x-hidden
             overscroll-contain
           "
         >
 
           <div
             className="
+              w-full
               max-w-4xl
               mx-auto
-              px-4
+              px-3
+              sm:px-4
               md:px-6
-              py-6
+              py-4
+              sm:py-6
             "
           >
 
@@ -943,9 +956,11 @@ const AIAssistant = () => {
                   key={message.id}
                   className={`
                     flex
-                    gap-3
+                    gap-2
+                    sm:gap-3
                     md:gap-4
                     mb-6
+                    min-w-0
                     ${
                       message.role ===
                       "user"
@@ -980,12 +995,13 @@ const AIAssistant = () => {
                     </div>
                   )}
 
-
                   {/* MESSAGE */}
 
                   <div
                     className={`
-                      max-w-[80%]
+                      min-w-0
+                      max-w-[88%]
+                      sm:max-w-[80%]
                       ${
                         message.role ===
                         "user"
@@ -998,33 +1014,62 @@ const AIAssistant = () => {
                     <div
                       className={`
                         rounded-2xl
-                        px-4
+                        px-3
+                        sm:px-4
                         py-3
                         text-sm
                         leading-6
                         whitespace-pre-wrap
+                        break-words
+                        overflow-hidden
 
                         ${
                           message.role ===
                           "user"
                             ? `
-                              bg-indigo-600
-                              text-white
-                              rounded-tr-md
-                            `
+                                bg-indigo-600
+                                text-white
+                                rounded-tr-md
+                              `
                             : `
-                              bg-slate-900
-                              border
-                              border-slate-800
-                              text-slate-200
-                              rounded-tl-md
-                            `
+                                bg-slate-900
+                                border
+                                border-slate-800
+                                text-slate-200
+                                rounded-tl-md
+                              `
                         }
                       `}
                     >
-                      <ReactMarkdown>{message.content}</ReactMarkdown>
+                      <ReactMarkdown
+                        components={{
+                          p: ({ children }) => (
+                            <p className="break-words">
+                              {children}
+                            </p>
+                          ),
+                          pre: ({ children }) => (
+                            <pre className="max-w-full overflow-x-auto whitespace-pre rounded-lg bg-black/30 p-3 text-xs">
+                              {children}
+                            </pre>
+                          ),
+                          code: ({ children }) => (
+                            <code className="break-words">
+                              {children}
+                            </code>
+                          ),
+                          table: ({ children }) => (
+                            <div className="max-w-full overflow-x-auto">
+                              <table className="w-full text-xs">
+                                {children}
+                              </table>
+                            </div>
+                          ),
+                        }}
+                      >
+                        {message.content}
+                      </ReactMarkdown>
                     </div>
-
 
                     {/* COPY */}
 
@@ -1078,7 +1123,6 @@ const AIAssistant = () => {
 
                   </div>
 
-
                   {/* USER AVATAR */}
 
                   {message.role ===
@@ -1109,14 +1153,14 @@ const AIAssistant = () => {
               )
             )}
 
-
             {/* TYPING */}
 
             {isTyping && (
               <div
                 className="
                   flex
-                  gap-3
+                  gap-2
+                  sm:gap-3
                   md:gap-4
                   mb-6
                 "
@@ -1142,10 +1186,11 @@ const AIAssistant = () => {
                   />
                 </div>
 
-
                 <div
                   className="
-                    px-4
+                    min-w-0
+                    px-3
+                    sm:px-4
                     py-3
                     rounded-2xl
                     rounded-tl-md
@@ -1193,7 +1238,6 @@ const AIAssistant = () => {
 
         </div>
 
-
         {/* =====================================
             INPUT - ALWAYS FIXED INSIDE CHAT
         ====================================== */}
@@ -1204,7 +1248,8 @@ const AIAssistant = () => {
             border-t
             border-slate-800
             bg-slate-950
-            px-4
+            px-3
+            sm:px-4
             pt-3
             pb-3
           "
@@ -1212,6 +1257,7 @@ const AIAssistant = () => {
 
           <div
             className="
+              w-full
               max-w-4xl
               mx-auto
             "
@@ -1245,9 +1291,11 @@ const AIAssistant = () => {
 
                   rounded-2xl
 
-                  px-5
+                  px-3
+                  sm:px-5
                   py-3.5
-                  pr-14
+                  pr-12
+                  sm:pr-14
 
                   text-sm
                   text-white
@@ -1263,7 +1311,6 @@ const AIAssistant = () => {
                   transition
                 "
               />
-
 
               <button
                 type="submit"
@@ -1309,13 +1356,13 @@ const AIAssistant = () => {
 
             </form>
 
-
             <p
               className="
                 text-center
                 text-[9px]
                 text-slate-700
                 mt-2
+                px-1
               "
             >
               AI can make mistakes. Verify
