@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import api from "../services/api";
 
@@ -69,18 +70,18 @@ const BenefitCard = ({ benefit }) => {
   }
 
   return (
-    <div className="group flex min-h-[420px] flex-col overflow-hidden rounded-2xl border border-zinc-800 bg-[#252525] transition duration-200 hover:-translate-y-1 hover:border-zinc-600">
+    <div className="group flex min-h-[420px] min-w-0 flex-col overflow-hidden rounded-2xl border border-zinc-800 bg-[#252525] transition duration-200 hover:-translate-y-1 hover:border-zinc-600">
 
       {/* CARD BODY */}
-      <div className="flex flex-1 flex-col p-5">
+      <div className="flex flex-1 flex-col p-4 sm:p-5">
 
         {/* TOP */}
-        <div className="flex items-start justify-between gap-3">
+        <div className="flex min-w-0 items-start justify-between gap-2 sm:gap-3">
 
-          <div className="flex min-w-0 items-center gap-3">
+          <div className="flex min-w-0 items-center gap-2 sm:gap-3">
 
             {/* LOGO */}
-            <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white p-2">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white p-2 sm:h-14 sm:w-14">
 
               {image ? (
                 <img
@@ -101,14 +102,14 @@ const BenefitCard = ({ benefit }) => {
             </div>
 
             {/* TITLE */}
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
 
-              <h3 className="truncate text-base font-bold text-white">
+              <h3 className="break-words text-sm font-bold text-white sm:text-base">
                 {title}
               </h3>
 
               {brand && brand !== title && (
-                <p className="mt-1 truncate text-xs text-zinc-500">
+                <p className="mt-1 break-words text-xs text-zinc-500">
                   {brand}
                 </p>
               )}
@@ -134,7 +135,7 @@ const BenefitCard = ({ benefit }) => {
             {tags.slice(0, 3).map((tag, index) => (
               <span
                 key={index}
-                className="rounded-full border border-blue-500/30 bg-blue-500/10 px-2.5 py-1 text-[10px] font-medium text-blue-300"
+                className="max-w-full break-words rounded-full border border-blue-500/30 bg-blue-500/10 px-2.5 py-1 text-[10px] font-medium text-blue-300"
               >
                 {tag}
               </span>
@@ -145,9 +146,9 @@ const BenefitCard = ({ benefit }) => {
 
         {/* OFFER */}
         {offer && (
-          <div className="mt-5 min-h-[62px] rounded-xl border border-yellow-700/40 bg-yellow-500/10 px-4 py-3">
+          <div className="mt-5 min-h-[62px] rounded-xl border border-yellow-700/40 bg-yellow-500/10 px-3 py-3 sm:px-4">
 
-            <p className="line-clamp-2 text-sm font-bold leading-5 text-yellow-300">
+            <p className="line-clamp-2 break-words text-sm font-bold leading-5 text-yellow-300">
               {Array.isArray(offer)
                 ? offer.join(" • ")
                 : String(offer)}
@@ -158,7 +159,7 @@ const BenefitCard = ({ benefit }) => {
 
         {/* DESCRIPTION */}
         {description && (
-          <p className="mt-5 line-clamp-3 text-sm leading-6 text-zinc-400">
+          <p className="mt-5 line-clamp-3 break-words text-sm leading-6 text-zinc-400">
             {description}
           </p>
         )}
@@ -171,7 +172,7 @@ const BenefitCard = ({ benefit }) => {
               href={url}
               target="_blank"
               rel="noreferrer"
-              className="flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-blue-600 text-sm font-semibold text-white transition hover:bg-blue-500"
+              className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-blue-600 text-sm font-semibold text-white transition hover:bg-blue-500 sm:h-14"
             >
               Claim Offer
               <span className="text-lg">↗</span>
@@ -180,7 +181,7 @@ const BenefitCard = ({ benefit }) => {
             <button
               type="button"
               disabled
-              className="flex h-14 w-full cursor-not-allowed items-center justify-center rounded-xl bg-zinc-700 text-sm font-semibold text-zinc-500"
+              className="flex h-12 w-full cursor-not-allowed items-center justify-center rounded-xl bg-zinc-700 text-sm font-semibold text-zinc-500 sm:h-14"
             >
               Offer unavailable
             </button>
@@ -191,11 +192,13 @@ const BenefitCard = ({ benefit }) => {
       </div>
 
       {/* LOCATION */}
-      <div className="border-t border-zinc-800 px-5 py-3">
+      <div className="border-t border-zinc-800 px-4 py-3 sm:px-5">
 
-        <span className="inline-flex items-center gap-2 rounded-full border border-zinc-700 bg-zinc-800 px-3 py-1 text-xs text-zinc-400">
+        <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-zinc-700 bg-zinc-800 px-3 py-1 text-xs text-zinc-400">
           ⌖
-          {location}
+          <span className="break-words">
+            {location}
+          </span>
         </span>
 
       </div>
@@ -258,23 +261,23 @@ const Benefits = () => {
   }, []);
 
   return (
-    <div className="min-h-full bg-[#111111] px-4 py-6 text-white md:px-8 md:py-8">
+    <div className="min-h-full w-full min-w-0 overflow-x-hidden bg-[#111111] px-3 py-5 text-white sm:px-4 sm:py-6 md:px-8 md:py-8">
 
-      <div className="mx-auto max-w-[1500px]">
+      <div className="mx-auto w-full max-w-[1500px]">
 
         {/* ================= HEADER ================= */}
 
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
 
           <p className="text-xs font-medium uppercase tracking-[0.18em] text-blue-400">
             Student Perks
           </p>
 
-          <h1 className="mt-2 text-3xl font-bold tracking-tight text-white md:text-4xl">
+          <h1 className="mt-2 break-words text-2xl font-bold tracking-tight text-white sm:text-3xl md:text-4xl">
             Student Benefits
           </h1>
 
-          <p className="mt-2 text-sm text-zinc-500">
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-zinc-500">
             Discover student discounts, free tools,
             credits and exclusive benefits.
           </p>
@@ -284,13 +287,13 @@ const Benefits = () => {
         {/* ================= LOADING ================= */}
 
         {loading && (
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-4">
 
             {Array.from({ length: 8 }).map(
               (_, index) => (
                 <div
                   key={index}
-                  className="h-[420px] animate-pulse rounded-2xl border border-zinc-800 bg-[#1D1D1D]"
+                  className="h-[420px] min-w-0 animate-pulse rounded-2xl border border-zinc-800 bg-[#1D1D1D]"
                 />
               )
             )}
@@ -301,9 +304,9 @@ const Benefits = () => {
         {/* ================= ERROR ================= */}
 
         {!loading && error && (
-          <div className="rounded-2xl border border-red-900/50 bg-red-950/20 px-6 py-16 text-center">
+          <div className="rounded-2xl border border-red-900/50 bg-red-950/20 px-4 py-12 text-center sm:px-6 sm:py-16">
 
-            <p className="text-sm text-red-400">
+            <p className="break-words text-sm text-red-400">
               {error}
             </p>
 
@@ -323,7 +326,7 @@ const Benefits = () => {
         {!loading &&
           !error &&
           benefits.length === 0 && (
-            <div className="rounded-2xl border border-zinc-800 bg-[#1A1A1A] px-6 py-20 text-center">
+            <div className="rounded-2xl border border-zinc-800 bg-[#1A1A1A] px-4 py-14 text-center sm:px-6 sm:py-20">
 
               <h2 className="text-lg font-semibold text-white">
                 No offers found
@@ -342,21 +345,23 @@ const Benefits = () => {
           !error &&
           benefits.length > 0 && (
             <>
-              <div className="mb-5 flex items-center justify-between">
+              <div className="mb-5 flex min-w-0 items-center justify-between">
 
-                <div>
-                  <h2 className="text-lg font-semibold text-white">
+                <div className="min-w-0">
+
+                  <h2 className="text-base font-semibold text-white sm:text-lg">
                     All Student Offers
                   </h2>
 
                   <p className="mt-1 text-xs text-zinc-500">
                     {benefits.length} offers available
                   </p>
+
                 </div>
 
               </div>
 
-              <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+              <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-4">
 
                 {benefits.map((benefit, index) => (
                   <BenefitCard
