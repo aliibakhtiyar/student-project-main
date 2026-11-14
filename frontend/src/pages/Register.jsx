@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 
 import {
@@ -85,17 +86,19 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen w-full overflow-x-hidden bg-slate-50">
 
       {/* Header */}
+
       <header className="border-b border-slate-200 bg-white">
-        <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-5">
+
+        <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-3 px-4 sm:h-20 sm:px-5">
 
           <Logo />
 
           <Link
             to="/login"
-            className="flex items-center gap-2 text-sm font-medium text-slate-600 transition hover:text-slate-950"
+            className="flex shrink-0 items-center gap-2 text-sm font-medium text-slate-600 transition hover:text-slate-950"
           >
             <span className="text-base">
               ←
@@ -105,23 +108,28 @@ const Register = () => {
           </Link>
 
         </div>
+
       </header>
 
       {/* Main */}
-      <main className="mx-auto max-w-3xl px-4 py-10 md:py-14">
+
+      <main className="mx-auto w-full max-w-3xl px-3 py-7 sm:px-4 sm:py-10 md:py-14">
 
         {/* Heading */}
-        <div className="mb-8">
 
-          <div className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-slate-400">
-            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
+        <div className="mb-6 sm:mb-8">
+
+          <div className="mb-4 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-widest text-slate-400 sm:text-xs">
+
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
               ✓
             </span>
 
             Student verification
+
           </div>
 
-          <h1 className="text-3xl font-bold tracking-tight text-slate-950 md:text-4xl">
+          <h1 className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl md:text-4xl">
             Create your account
           </h1>
 
@@ -133,14 +141,16 @@ const Register = () => {
         </div>
 
         {/* Form Card */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
+
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6 md:p-8">
 
           <form
             onSubmit={handleSubmit}
-            className="space-y-6"
+            className="space-y-5 sm:space-y-6"
           >
 
             {/* Personal Information */}
+
             <div>
 
               <h2 className="text-base font-bold text-slate-950">
@@ -153,10 +163,11 @@ const Register = () => {
 
             </div>
 
-            <div className="grid gap-5 md:grid-cols-2">
+            <div className="grid min-w-0 grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2">
 
               {/* Name */}
-              <div className="md:col-span-2">
+
+              <div className="min-w-0 md:col-span-2">
 
                 <label className="mb-2 block text-sm font-semibold text-slate-700">
                   Full name *
@@ -168,13 +179,14 @@ const Register = () => {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Mohd Ali"
-                  className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-slate-950 focus:ring-4 focus:ring-slate-100"
+                  className="w-full min-w-0 rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-slate-950 focus:ring-4 focus:ring-slate-100"
                 />
 
               </div>
 
               {/* Email */}
-              <div className="md:col-span-2">
+
+              <div className="min-w-0 md:col-span-2">
 
                 <label className="mb-2 block text-sm font-semibold text-slate-700">
                   College email *
@@ -186,7 +198,7 @@ const Register = () => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="you@college.edu"
-                  className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-slate-950 focus:ring-4 focus:ring-slate-100"
+                  className="w-full min-w-0 rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-slate-950 focus:ring-4 focus:ring-slate-100"
                 />
 
                 <p className="mt-2 text-xs text-slate-400">
@@ -196,7 +208,8 @@ const Register = () => {
               </div>
 
               {/* Password */}
-              <div className="md:col-span-2">
+
+              <div className="min-w-0 md:col-span-2">
 
                 <label className="mb-2 block text-sm font-semibold text-slate-700">
                   Password *
@@ -208,7 +221,7 @@ const Register = () => {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="Minimum 8 characters"
-                  className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-slate-950 focus:ring-4 focus:ring-slate-100"
+                  className="w-full min-w-0 rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-slate-950 focus:ring-4 focus:ring-slate-100"
                 />
 
               </div>
@@ -218,6 +231,7 @@ const Register = () => {
             <div className="h-px bg-slate-100" />
 
             {/* Academic Information */}
+
             <div>
 
               <h2 className="text-base font-bold text-slate-950">
@@ -230,10 +244,11 @@ const Register = () => {
 
             </div>
 
-            <div className="grid gap-5 md:grid-cols-2">
+            <div className="grid min-w-0 grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2">
 
               {/* Institute */}
-              <div className="md:col-span-2">
+
+              <div className="min-w-0 md:col-span-2">
 
                 <label className="mb-2 block text-sm font-semibold text-slate-700">
                   Institute *
@@ -243,7 +258,7 @@ const Register = () => {
                   name="institute"
                   value={formData.institute}
                   onChange={handleChange}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-slate-950 focus:ring-4 focus:ring-slate-100"
+                  className="w-full min-w-0 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-slate-950 focus:ring-4 focus:ring-slate-100"
                 >
                   <option value="">
                     Select your institute
@@ -293,7 +308,8 @@ const Register = () => {
               </div>
 
               {/* Department */}
-              <div>
+
+              <div className="min-w-0">
 
                 <label className="mb-2 block text-sm font-semibold text-slate-700">
                   Department
@@ -305,13 +321,14 @@ const Register = () => {
                   value={formData.department}
                   onChange={handleChange}
                   placeholder="Computer Science"
-                  className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-slate-950 focus:ring-4 focus:ring-slate-100"
+                  className="w-full min-w-0 rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-slate-950 focus:ring-4 focus:ring-slate-100"
                 />
 
               </div>
 
               {/* Year */}
-              <div>
+
+              <div className="min-w-0">
 
                 <label className="mb-2 block text-sm font-semibold text-slate-700">
                   Year
@@ -321,7 +338,7 @@ const Register = () => {
                   name="year"
                   value={formData.year}
                   onChange={handleChange}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-slate-950 focus:ring-4 focus:ring-slate-100"
+                  className="w-full min-w-0 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-slate-950 focus:ring-4 focus:ring-slate-100"
                 >
                   <option value="">
                     Select year
@@ -347,7 +364,8 @@ const Register = () => {
               </div>
 
               {/* Semester */}
-              <div>
+
+              <div className="min-w-0">
 
                 <label className="mb-2 block text-sm font-semibold text-slate-700">
                   Semester
@@ -357,7 +375,7 @@ const Register = () => {
                   name="semester"
                   value={formData.semester}
                   onChange={handleChange}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-slate-950 focus:ring-4 focus:ring-slate-100"
+                  className="w-full min-w-0 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-slate-950 focus:ring-4 focus:ring-slate-100"
                 >
                   <option value="">
                     Select semester
@@ -382,6 +400,7 @@ const Register = () => {
             </div>
 
             {/* Submit */}
+
             <button
               type="submit"
               disabled={loading}
@@ -397,6 +416,7 @@ const Register = () => {
         </div>
 
       </main>
+
     </div>
   );
 };
