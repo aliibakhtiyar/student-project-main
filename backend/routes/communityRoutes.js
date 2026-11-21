@@ -1,0 +1,12 @@
+const router = require('express').Router();
+const auth = require('../middleware/authMiddleware');
+const c = require('../controllers/communityController');
+router.use(auth);
+router.get('/stats', c.stats);
+router.get('/leaderboard', c.leaderboard);
+router.get('/students', c.searchStudents);
+router.get('/friends', c.friends);
+router.post('/friends/request', c.sendRequest);
+router.patch('/friends/:id/accept', c.acceptRequest);
+router.delete('/friends/:id', c.removeFriend);
+module.exports = router;

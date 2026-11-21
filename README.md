@@ -148,3 +148,9 @@ GitHub: [@aliibakhtiyar](https://github.com/aliibakhtiyar)
 ## 📄 License
 
 This project is available for educational and learning purposes. Add a license file if you want to specify reuse and distribution permissions.
+
+## Community Arena upgrade
+
+This copy adds skill stats, leaderboards, friends, PvP quizzes and collaborative study rooms.
+See [`UPGRADE_GUIDE.md`](./UPGRADE_GUIDE.md) for setup, new routes, Grok API migration,
+security limitations and a staging-first Render deployment plan. Nothing has been deployed.

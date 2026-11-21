@@ -1,9 +1,9 @@
 
-const client = require("../config/groq");
+const client = require("../config/grok");
 const QuizAttempt = require("../models/QuizAttempt");
 
 const MODEL =
-  process.env.GROQ_CHAT_MODEL || "openai/gpt-oss-120b";
+  process.env.GROK_CHAT_MODEL || "grok-4.7";
 
 const generateQuiz = async (req, res) => {
   try {

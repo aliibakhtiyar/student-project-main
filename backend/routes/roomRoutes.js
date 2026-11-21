@@ -1,0 +1,11 @@
+const router = require('express').Router();
+const auth = require('../middleware/authMiddleware');
+const c = require('../controllers/roomController');
+router.use(auth);
+router.get('/', c.mine);
+router.post('/', c.create);
+router.post('/join', c.join);
+router.get('/:id', c.get);
+router.get('/:id/messages', c.messages);
+router.post('/:id/leave', c.leave);
+module.exports = router;

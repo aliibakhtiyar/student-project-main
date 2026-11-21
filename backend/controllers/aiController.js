@@ -1,5 +1,5 @@
 
-const client = require("../config/groq");
+const client = require("../config/grok");
 
 const SYSTEM_PROMPT = `
 You are UniSphere AI, the personal AI assistant for students.
@@ -59,10 +59,10 @@ const chatWithAI = async (req, res) => {
       });
     }
 
-    if (!process.env.GROQ_API_KEY) {
+    if (!process.env.GROK_API_KEY) {
       return res.status(500).json({
         success: false,
-        message: "GROQ_API_KEY is missing",
+        message: "GROK_API_KEY is missing",
       });
     }
 
@@ -91,8 +91,8 @@ const chatWithAI = async (req, res) => {
 
     const response = await client.chat.completions.create({
       model:
-        process.env.GROQ_CHAT_MODEL ||
-        "openai/gpt-oss-120b",
+        process.env.GROK_CHAT_MODEL ||
+        "grok-4.7",
       messages,
       temperature: 0.7,
       max_completion_tokens: 2500,
@@ -117,7 +117,7 @@ const chatWithAI = async (req, res) => {
       model: response.model,
     });
   } catch (error) {
-    console.error("========== GROQ AI ERROR ==========");
+    console.error("========== GROK AI ERROR ==========");
     console.error(error.message);
     console.error("===================================");
 

@@ -6,7 +6,9 @@ const {
   improveResumeProject,
 } = require("../controllers/resumeController");
 
-router.post("/ai-summary", generateResumeSummary);
-router.post("/ai-project", improveResumeProject);
+const authMiddleware = require("../middleware/authMiddleware");
+const aiRateLimit = require("../middleware/aiRateLimit");
+router.post("/ai-summary", authMiddleware, aiRateLimit, generateResumeSummary);
+router.post("/ai-project", authMiddleware, aiRateLimit, improveResumeProject);
 
 module.exports = router;

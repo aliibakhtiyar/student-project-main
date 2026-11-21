@@ -6,6 +6,9 @@ const classroomRoutes = require("./routes/classroomRoutes");
 
 
 const express = require("express");
+const http = require("http");
+const setupSockets = require("./services/socketService");
+const { sweepExpired } = require('./services/battleService');
 const leetcodeRoutes =
   require("./routes/leetcodeRoutes");
 const linkedinRoutes =
@@ -41,6 +44,8 @@ app.use(
 
 const allowedOrigins = [
   "https://student-project-main-1.onrender.com",
+  ...(process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : []),
+  ...(process.env.NODE_ENV === 'production' ? [] : ['http://localhost:5173']),
 ];
 
 app.use(
@@ -69,6 +74,9 @@ app.use(
   linkedinRoutes
 );
 app.use("/api/resume", require("./routes/resumeRoutes"));
+app.use("/api/community", require("./routes/communityRoutes"));
+app.use("/api/battles", require("./routes/battleRoutes"));
+app.use("/api/rooms", require("./routes/roomRoutes"));
 app.use("/api/quiz", require("./routes/quizRoutes"));
 app.use(
   express.urlencoded({
@@ -131,7 +139,13 @@ app.use((error, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+const httpServer = http.createServer(app);
+const io = setupSockets(httpServer, allowedOrigins);
+app.set('io', io);
+const settlementTimer = setInterval(() => sweepExpired(io), 60000);
+settlementTimer.unref();
+
+httpServer.listen(PORT, () => {
   console.log(
     `Server running on http://localhost:${PORT}`
   );

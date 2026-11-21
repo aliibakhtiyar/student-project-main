@@ -1,6 +1,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import api from "../services/api";
 import {
   Bot,
   Sparkles,
@@ -177,28 +178,12 @@ const AIAssistant = () => {
           content: message.content,
         }));
 
-      const response = await fetch(
-        "https://student-project-main.onrender.com/api/ai/chat",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            message: text,
-            conversation,
-          }),
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          data.message ||
-            "Failed to get AI response"
-        );
-      }
+      // Authenticated request uses the configured API endpoint, including staging.
+      const response = await api.post('/ai/chat', {
+        message: text,
+        conversation,
+      });
+      const data = response.data;
 
       const assistantMessage = {
         id: generateId(),

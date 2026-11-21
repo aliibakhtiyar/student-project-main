@@ -61,6 +61,11 @@ const Sidebar = ({
       path: "/quiz-practice",
       icon: "𖡎",
     },
+    { name: "Skill Stats", path: "/skill-stats", icon: "↗" },
+    { name: "Leaderboard", path: "/leaderboard", icon: "♛" },
+    { name: "Friends", path: "/friends", icon: "♧" },
+    { name: "PvP Battles", path: "/battles", icon: "⚔" },
+    { name: "Study Rooms", path: "/study-rooms", icon: "☷" },
     {
       name: "Profile",
       path: "/profile",

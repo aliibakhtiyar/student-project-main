@@ -1,0 +1,12 @@
+const router = require('express').Router();
+const auth = require('../middleware/authMiddleware');
+const aiRateLimit = require('../middleware/aiRateLimit');
+const c = require('../controllers/battleController');
+router.use(auth);
+router.get('/', c.list);
+router.post('/', aiRateLimit, c.challenge);
+router.get('/:id', c.get);
+router.post('/:id/accept', c.accept);
+router.post('/:id/decline', c.decline);
+router.post('/:id/submit', c.submit);
+module.exports = router;

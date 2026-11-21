@@ -1,8 +1,8 @@
 
-const client = require("../config/groq");
+const client = require("../config/grok");
 
 const MODEL =
-  process.env.GROQ_CHAT_MODEL || "openai/gpt-oss-120b";
+  process.env.GROK_CHAT_MODEL || "grok-4.7";
 
 // Generate Resume Summary
 const generateResumeSummary = async (req, res) => {

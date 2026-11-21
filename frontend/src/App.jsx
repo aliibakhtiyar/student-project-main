@@ -1,5 +1,12 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import QuizPractice from "./pages/QuizPractice";
+import SkillStats from './pages/community/SkillStats';
+import Leaderboard from './pages/community/Leaderboard';
+import Friends from './pages/community/Friends';
+import Battles from './pages/community/Battles';
+import BattleRoom from './pages/community/BattleRoom';
+import StudyRooms from './pages/community/StudyRooms';
+import StudyRoom from './pages/community/StudyRoom';
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Hackathons from "./pages/Hackathons";
@@ -116,6 +123,13 @@ const App = () => {
   element={<QuizPractice />}
 />
 
+        <Route path="/skill-stats" element={<SkillStats />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/friends" element={<Friends />} />
+        <Route path="/battles" element={<Battles />} />
+        <Route path="/battles/:id" element={<BattleRoom />} />
+        <Route path="/study-rooms" element={<StudyRooms />} />
+        <Route path="/study-rooms/:id" element={<StudyRoom />} />
         <Route
           path="/profile"
           element={<Profile />}
