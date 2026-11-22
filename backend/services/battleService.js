@@ -2,28 +2,66 @@ const grok = require('../config/grok');
 const Battle = require('../models/Battle');
 const MODEL = process.env.GROK_CHAT_MODEL || 'grok-4.7';
 
-async function generateBattleQuestions({ topic, difficulty, count }) {
-  const response = await grok.chat.completions.create({
-    model: MODEL,
-    temperature: 0.25,
-    max_completion_tokens: 4500,
-    response_format: { type: 'json_object' },
-    messages: [
-      { role: 'system', content: `Generate accurate programming and CS MCQs as JSON only: {"questions":[{"question":"...","options":["A","B","C","D"],"correctAnswer":0,"explanation":"..."}]}. Exactly the requested number of questions; exactly four distinct options per question; correctAnswer integer 0-3. No markdown. Avoid ambiguous questions.` },
-      { role: 'user', content: JSON.stringify({ topic, difficulty, count }) },
-    ],
-  });
-  const raw = response.choices?.[0]?.message?.content || '';
-  const questions = JSON.parse(raw.replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/,'')).questions;
-  if (!Array.isArray(questions) || questions.length !== count || questions.some(q =>
+// Grok can spend completion tokens on reasoning. Retry only malformed/truncated
+// outputs; never retry billing, auth, rate-limit or network failures automatically.
+function parseQuestionSet(raw, count) {
+  if (!raw || typeof raw !== 'string') throw new Error('Grok returned no questions');
+  let data;
+  try {
+    data = JSON.parse(raw.trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, ''));
+  } catch {
+    throw new Error('Grok returned text that was not valid question JSON');
+  }
+  const questions = data?.questions;
+  if (!Array.isArray(questions) || questions.length !== count) {
+    throw new Error('Grok returned the wrong number of questions');
+  }
+  if (questions.some(q =>
     !q || typeof q.question !== 'string' || !q.question.trim() || q.question.length > 1000 ||
     !Array.isArray(q.options) || q.options.length !== 4 ||
     q.options.some(o => typeof o !== 'string' || !o.trim() || o.length > 350) ||
     new Set(q.options.map(o => o.toLowerCase().trim())).size !== 4 ||
     !Number.isInteger(q.correctAnswer) || q.correctAnswer < 0 || q.correctAnswer > 3 ||
     typeof q.explanation !== 'string'
-  )) throw new Error('Grok returned an invalid battle question set');
+  )) {
+    throw new Error('Grok returned questions with invalid options, answers or explanations');
+  }
   return questions;
+}
+
+async function generateBattleQuestions({ topic, difficulty, count }) {
+  const messages = [
+    { role: 'system', content: 'Generate accurate computer-science multiple-choice questions. Return only one valid JSON object with a "questions" array. Each question must have question (string), options (array of exactly four distinct strings), correctAnswer (integer 0-3), and explanation (string). No Markdown. Exactly the requested count. Ensure only one option is correct. Keep questions and explanations brief.' },
+    { role: 'user', content: JSON.stringify({ topic, difficulty, count }) },
+  ];
+  for (let attempt = 0; attempt < 2; attempt++) {
+    // 10-question battles need more budget than 5-question battles.
+    const maxTokens = count === 10 ? 12000 : 7000;
+    const response = await grok.chat.completions.create({
+      model: MODEL,
+      max_completion_tokens: maxTokens,
+      // Response-format hints are omitted for maximum compatibility with Grok models.
+      messages: attempt === 0 ? messages : [
+        ...messages,
+        { role: 'user', content: 'Your previous response could not be validated. Return strict JSON with exactly the specified number of complete questions. Do not add any other text.' },
+      ],
+    });
+    try {
+      return parseQuestionSet(response.choices?.[0]?.message?.content, count);
+    } catch (err) {
+      console.warn('[PvP question validation]', {
+        attempt: attempt + 1,
+        reason: err.message,
+        finishReason: response.choices?.[0]?.finish_reason || null,
+      });
+      if (attempt === 1) {
+        const failure = new Error('Grok could not generate a complete valid question set. Try 5 questions or a simpler topic.');
+        failure.status = 502;
+        failure.code = 'GROK_INVALID_QUESTIONS';
+        throw failure;
+      }
+    }
+  }
 }
 
 function battleForViewer(battle, viewerId) {
