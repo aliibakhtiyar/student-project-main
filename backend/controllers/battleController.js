@@ -25,7 +25,29 @@ async function challenge(req, res) {
     }
     const pending = await Battle.countDocuments({ challenger: req.user._id, status: 'pending' });
     if (pending >= 5) return res.status(429).json({ message: 'Resolve your pending challenges first' });
-    const questions = await generateBattleQuestions({ topic: normalizedTopic, difficulty, count: Number(count) });
+    let questions;
+    try {
+      questions = await generateBattleQuestions({ topic: normalizedTopic, difficulty, count: Number(count) });
+    } catch (error) {
+      console.error('PvP challenge question generation:', {
+        code: error.code || 'UNKNOWN',
+        status: error.status || 502,
+        message: error.message,
+      });
+      const safeStatus = [429, 502, 503, 504].includes(error.status) ? error.status : 502;
+      const safeCodes = new Set([
+        'GROK_NOT_CONFIGURED', 'GROK_INVALID_KEY', 'GROK_NO_CREDITS',
+        'GROK_ACCESS_DENIED', 'GROK_MODEL_UNAVAILABLE', 'GROK_RATE_LIMIT',
+        'GROK_TIMEOUT', 'GROK_NETWORK_ERROR', 'GROK_INVALID_REQUEST',
+        'GROK_INVALID_QUESTIONS', 'GROK_UPSTREAM_ERROR',
+      ]);
+      return res.status(safeStatus).json({
+        message: safeCodes.has(error.code)
+          ? error.message
+          : 'Could not generate valid PvP questions. Please try again.',
+        code: safeCodes.has(error.code) ? error.code : 'GROK_GENERATION_FAILED',
+      });
+    }
     const battle = await Battle.create({
       challenger: req.user._id, opponent: id, topic: normalizedTopic, difficulty,
       durationSeconds: Number(count) === 10 ? 900 : 600, questions,
@@ -34,8 +56,8 @@ async function challenge(req, res) {
     emit(req, battle);
     res.status(201).json({ battle: battleForViewer(battle, req.user._id) });
   } catch (e) {
-    console.error('Create challenge:', e.message);
-    res.status(502).json({ message: 'Could not generate challenge. Check Grok API or try again.' });
+    console.error('Save PvP challenge:', e.message);
+    res.status(500).json({ message: 'Questions were generated, but the challenge could not be saved. Try again.', code: 'BATTLE_SAVE_FAILED' });
   }
 }
 async function list(req, res) {
