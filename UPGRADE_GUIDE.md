@@ -1,6 +1,6 @@
-# UniSphere — Community Arena Upgrade (staging-ready code)
+# UniSphere — Community Arena Upgrade (current GitHub main)
 
-This is an **additive copy** of the uploaded `student-project-main` codebase. The original features, routes, authentication and MongoDB collections were preserved. **No changes were pushed to GitHub or deployed to Render.**
+The Community Arena code has been merged into GitHub `main`. Original features, routes, authentication, and MongoDB collections remain in place. GitHub changes alone do not prove that the current Render deployment is live or that production API keys are configured.
 
 ## Added features
 
@@ -11,11 +11,26 @@ This is an **additive copy** of the uploaded `student-project-main` codebase. Th
 | Search, request, accept and remove friends | `/friends` | `/api/community/friends`, `/api/community/students` |
 | 1v1 timed friend-vs-friend MCQ battles | `/battles`, `/battles/:id` | `/api/battles` |
 | Private study rooms with shared code scratchpad and live chat | `/study-rooms`, `/study-rooms/:id` | `/api/rooms`, Socket.IO |
-| Grok-only AI for chat, quizzes and resume generation | existing pages | `/api/ai`, `/api/quiz`, `/api/resume` |
+| Groq Cloud free-tier AI for chat, quizzes, PvP, and resumes | existing pages | `/api/ai`, `/api/quiz`, `/api/battles`, `/api/resume` |
 
-## IMPORTANT: Your old AI setup was **Groq**, not Grok
+## Free AI provider (current configuration)
 
-The uploaded project used `groq-sdk`, `GROQ_API_KEY` and `openai/gpt-oss-120b` in the AI assistant, quiz generator and resume endpoints. These controllers now use the **official Grok API** at `https://api.x.ai/v1/chat/completions` with `GROK_API_KEY`. The former `backend/config/groq.js` and `backend/config/omniRoute.js` files are retained as unused legacy files, so the original archive structure is easy to compare; the active controllers no longer import either. Grok API usage may incur billing.
+The active AI client is `backend/config/groq.js`, which calls **Groq Cloud**, not xAI/Grok or grok-api.com. The default model is `openai/gpt-oss-120b` and requires a Groq Cloud API key from https://console.groq.com/keys. A key from grok-api.com or xAI will not authenticate here. The old `backend/config/grok.js` is a compatibility shim that points to the free-tier client.
+
+### Render environment for the backend
+
+In Render > your BACKEND web service > Environment, add or update:
+
+```env
+GROQ_API_KEY=your_real_groq_cloud_key
+GROQ_CHAT_MODEL=openai/gpt-oss-120b
+```
+
+Keep existing `MONGO_URI`, `JWT_SECRET`, `FRONTEND_URL`, and existing OAuth/email settings unchanged. **Never commit real keys**. Your frontend Render service should retain its existing `VITE_API_URL=https://YOUR-BACKEND.onrender.com/api` variable. You do not put `GROQ_API_KEY` into frontend/Vite settings.
+
+Save and deploy/redeploy the backend service. Test AI Assistant chat, then a 5-question quiz, 5-question PvP challenge and résumé generation. When the free rate limit is exceeded, AI endpoints may return HTTP 429. Inspect your backend Render logs for `[Groq Cloud]` when debugging.
+
+Official docs: https://console.groq.com/docs/models and https://console.groq.com/docs/rate-limits.
 
 The new PvP generator requests JSON from Grok, validates the question structure and stores correct answers only on the backend. Both players receive the same questions. AI-generated content may still contain factual errors: a curated, human-reviewed bank is recommended before introducing rated or prize-bearing competitions.
 
@@ -51,7 +66,7 @@ Frontend: http://localhost:5173. Backend: http://localhost:5000.
 1. Create a new GitHub branch, for example `feature/community-arena`. Import the upgraded files **into that branch**. Do not overwrite `main`.
 2. Configure a **separate staging MongoDB database**. Do not run untested changes against your production database.
 3. Create a new Render backend web service pointed at `backend/` on the staging branch. Build command: `npm install`; start command: `npm start`.
-4. Backend environment: set `MONGO_URI`, `JWT_SECRET`, `GROK_API_KEY`, `GROK_CHAT_MODEL=grok-4.7`, `FRONTEND_URL=https://<your-staging-frontend>.onrender.com`, and any existing mail/OAuth variables your project needs. Keep keys exclusively on the server.
+4. Backend environment: set `MONGO_URI`, `JWT_SECRET`, `GROQ_API_KEY`, `GROQ_CHAT_MODEL=openai/gpt-oss-120b`, `FRONTEND_URL=https://<your-staging-frontend>.onrender.com`, and any existing mail/OAuth variables your project needs. Keep keys exclusively on the server.
 5. Create a staging frontend Static Site rooted at `frontend/`; build command: `npm install && npm run build`; publish directory: `dist`. Set `VITE_API_URL=https://<your-staging-backend>.onrender.com/api` **before** the frontend build.
 6. Ensure SPA rewrites send unknown paths to `/index.html` (existing frontend uses React Router). Verify `/battles/:id` and `/study-rooms/:id` on page refresh.
 7. Test with two separate student accounts in different browsers. Only consider merging into `main` after you confirm functionality and a production rollback plan.
@@ -85,4 +100,4 @@ Render web services support WebSockets. On free plans, idle services can sleep; 
 - All backend JavaScript files passed `node --check`.
 - Added JSX pages and modified React files passed a TypeScript JSX syntax check.
 - Unit-level checks passed for XP anti-farming and match-answer redaction.
-- **Not verified here:** `npm install`, actual React/Vite build, live MongoDB/Socket.IO integration, a valid Grok API response, browser-based end-to-end tests, or Render deployment. These must be completed on staging before production use.
+- **Not verified here:** live Groq Cloud API calls (requires a private key), actual Render deployment status, complete production build, or browser-based end-to-end tests. Check Render Deploys/Logs and run a live smoke test before claiming production success.
