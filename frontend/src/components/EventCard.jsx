@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 
 const EventCard = ({ event }) => {
   const formatDate = (date) => {
@@ -199,4 +201,4 @@ const EventCard = ({ event }) => {
   );
 };
 
-export default EventCard;
+export default memo(EventCard);
