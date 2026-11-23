@@ -59,10 +59,10 @@ const chatWithAI = async (req, res) => {
       });
     }
 
-    if (!process.env.GROK_API_KEY) {
-      return res.status(500).json({
+    if (!process.env.GROQ_API_KEY) {
+      return res.status(503).json({
         success: false,
-        message: "GROK_API_KEY is missing",
+        message: "GROQ_API_KEY is missing in the backend Render environment",
       });
     }
 
@@ -91,10 +91,11 @@ const chatWithAI = async (req, res) => {
 
     const response = await client.chat.completions.create({
       model:
-        process.env.GROK_CHAT_MODEL ||
-        "grok-4.7",
+        process.env.GROQ_CHAT_MODEL ||
+        "openai/gpt-oss-120b",
       messages,
       temperature: 0.7,
+      reasoning_effort: "low",
       max_completion_tokens: 2500,
     });
 
@@ -117,7 +118,7 @@ const chatWithAI = async (req, res) => {
       model: response.model,
     });
   } catch (error) {
-    console.error("========== GROK AI ERROR ==========");
+    console.error("========== GROQ AI ERROR ==========");
     console.error(error.message);
     console.error("===================================");
 
