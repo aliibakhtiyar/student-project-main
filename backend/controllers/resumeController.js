@@ -1,8 +1,8 @@
 
-const client = require("../config/grok");
+const client = require("../config/groq");
 
 const MODEL =
-  process.env.GROK_CHAT_MODEL || "grok-4.7";
+  process.env.GROQ_CHAT_MODEL || "openai/gpt-oss-120b";
 
 // Generate Resume Summary
 const generateResumeSummary = async (req, res) => {
@@ -30,7 +30,8 @@ const generateResumeSummary = async (req, res) => {
         },
       ],
       temperature: 0.5,
-      max_completion_tokens: 500,
+      reasoning_effort: "low",
+      max_completion_tokens: 700,
     });
 
     const summary =
@@ -50,9 +51,10 @@ const generateResumeSummary = async (req, res) => {
   } catch (error) {
     console.error("Resume Summary Error:", error.message);
 
-    return res.status(500).json({
+    return res.status(error.status >= 400 && error.status < 600 ? error.status : 502).json({
       success: false,
-      message: "Failed to generate resume summary",
+      message: error.code ? error.message : "Failed to generate resume summary",
+      code: error.code || "AI_RESUME_SUMMARY_FAILED",
     });
   }
 };
@@ -83,7 +85,8 @@ const improveResumeProject = async (req, res) => {
         },
       ],
       temperature: 0.5,
-      max_completion_tokens: 700,
+      reasoning_effort: "low",
+      max_completion_tokens: 950,
     });
 
     const description =
@@ -103,9 +106,10 @@ const improveResumeProject = async (req, res) => {
   } catch (error) {
     console.error("Project Improvement Error:", error.message);
 
-    return res.status(500).json({
+    return res.status(error.status >= 400 && error.status < 600 ? error.status : 502).json({
       success: false,
-      message: "Failed to improve project description",
+      message: error.code ? error.message : "Failed to improve project description",
+      code: error.code || "AI_PROJECT_IMPROVEMENT_FAILED",
     });
   }
 };
