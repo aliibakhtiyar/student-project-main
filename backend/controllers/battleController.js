@@ -36,16 +36,16 @@ async function challenge(req, res) {
       });
       const safeStatus = [429, 502, 503, 504].includes(error.status) ? error.status : 502;
       const safeCodes = new Set([
-        'GROK_NOT_CONFIGURED', 'GROK_INVALID_KEY', 'GROK_NO_CREDITS',
-        'GROK_ACCESS_DENIED', 'GROK_MODEL_UNAVAILABLE', 'GROK_RATE_LIMIT',
-        'GROK_TIMEOUT', 'GROK_NETWORK_ERROR', 'GROK_INVALID_REQUEST',
-        'GROK_INVALID_QUESTIONS', 'GROK_UPSTREAM_ERROR',
+        'AI_NOT_CONFIGURED', 'AI_INVALID_KEY', 'AI_NO_CREDITS',
+        'AI_ACCESS_DENIED', 'AI_MODEL_UNAVAILABLE', 'AI_RATE_LIMIT',
+        'AI_TIMEOUT', 'AI_NETWORK_ERROR', 'AI_INVALID_REQUEST',
+        'AI_REQUEST_TOO_LARGE', 'AI_INVALID_QUESTIONS', 'AI_UPSTREAM_ERROR',
       ]);
       return res.status(safeStatus).json({
         message: safeCodes.has(error.code)
           ? error.message
           : 'Could not generate valid PvP questions. Please try again.',
-        code: safeCodes.has(error.code) ? error.code : 'GROK_GENERATION_FAILED',
+        code: safeCodes.has(error.code) ? error.code : 'AI_GENERATION_FAILED',
       });
     }
     const battle = await Battle.create({
