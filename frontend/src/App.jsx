@@ -1,31 +1,45 @@
+import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import QuizPractice from "./pages/QuizPractice";
-import SkillStats from './pages/community/SkillStats';
-import Leaderboard from './pages/community/Leaderboard';
-import Friends from './pages/community/Friends';
-import Battles from './pages/community/Battles';
-import BattleRoom from './pages/community/BattleRoom';
-import StudyRooms from './pages/community/StudyRooms';
-import StudyRoom from './pages/community/StudyRoom';
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Hackathons from "./pages/Hackathons";
-import VerifyOTP from "./pages/VerifyOTP";
+const QuizPractice = lazy(() => import("./pages/QuizPractice"));
+const SkillStats = lazy(() => import("./pages/community/SkillStats"));
+const Leaderboard = lazy(() => import("./pages/community/Leaderboard"));
+const Friends = lazy(() => import("./pages/community/Friends"));
+const Battles = lazy(() => import("./pages/community/Battles"));
+const BattleRoom = lazy(() => import("./pages/community/BattleRoom"));
+const StudyRooms = lazy(() => import("./pages/community/StudyRooms"));
+const StudyRoom = lazy(() => import("./pages/community/StudyRoom"));
+const Login = lazy(() => import("./pages/Login"));
+const Register = lazy(() => import("./pages/Register"));
+const Hackathons = lazy(() => import("./pages/Hackathons"));
+const VerifyOTP = lazy(() => import("./pages/VerifyOTP"));
 
-import Dashboard from "./pages/Dashboard";
-import Events from "./pages/Events";
-import Opportunities from "./pages/Opportunities";
-import Profile from "./pages/Profile";
-import ResumeBuilder from "./pages/ResumeBuilder";
-import Classroom from "./pages/Classroom";
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Events = lazy(() => import("./pages/Events"));
+const Opportunities = lazy(() => import("./pages/Opportunities"));
+const Profile = lazy(() => import("./pages/Profile"));
+const ResumeBuilder = lazy(() => import("./pages/ResumeBuilder"));
+const Classroom = lazy(() => import("./pages/Classroom"));
 // import ClassroomNotes from "./pages/ClassroomNotes";
 
-import DashboardLayout from "./layouts/DashboardLayout";
+const DashboardLayout = lazy(() => import("./layouts/DashboardLayout"));
 
 import { useAuth } from "./context/AuthContext";
-import Benefits from "./pages/Benefits";
-import AIAssistant from "./pages/AIAssistant";
-import PublicProfile from "./pages/PublicProfile";
+const Benefits = lazy(() => import("./pages/Benefits"));
+const AIAssistant = lazy(() => import("./pages/AIAssistant"));
+const PublicProfile = lazy(() => import("./pages/PublicProfile"));
+
+// Each page retains its own suspense boundary so the surrounding layout stays mounted.
+const PageFallback = () => (
+  <div className="flex min-h-[45vh] w-full items-center justify-center">
+    <div className="h-8 w-8 animate-spin rounded-full border-2 border-slate-700 border-t-indigo-400" />
+  </div>
+);
+
+const LazyPage = ({ component: Component }) => (
+  <Suspense fallback={<PageFallback />}>
+    <Component />
+  </Suspense>
+);
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -60,18 +74,18 @@ const App = () => {
 
       <Route
         path="/login"
-        element={<Login />}
+        element={<LazyPage component={Login} />}
       />
 
       <Route
         path="/register"
-        element={<Register />}
+        element={<LazyPage component={Register} />}
       />
 
 
       <Route
         path="/verify-otp"
-        element={<VerifyOTP />}
+        element={<LazyPage component={VerifyOTP} />}
       />
 
 
@@ -82,57 +96,57 @@ const App = () => {
       <Route
         element={
           <ProtectedRoute>
-            <DashboardLayout />
+            <LazyPage component={DashboardLayout} />
           </ProtectedRoute>
         }
       >
 
         <Route
           path="/dashboard"
-          element={<Dashboard />}
+          element={<LazyPage component={Dashboard} />}
         />
-              <Route path="/classroom" element={<Classroom />} />
-              <Route path="/ai-assistant" element={<AIAssistant />} />
-              <Route path="/public-profile" element={<PublicProfile />} />
+              <Route path="/classroom" element={<LazyPage component={Classroom} />} />
+              <Route path="/ai-assistant" element={<LazyPage component={AIAssistant} />} />
+              <Route path="/public-profile" element={<LazyPage component={PublicProfile} />} />
         <Route
           path="/events"
-          element={<Events />}
+          element={<LazyPage component={Events} />}
         />
 
         <Route
           path="/hackathons"
-          element={<Hackathons />}
+          element={<LazyPage component={Hackathons} />}
         />
 
         <Route
           path="/opportunities"
-          element={<Opportunities />}
+          element={<LazyPage component={Opportunities} />}
         />
 
         <Route
           path="/benefits"
-          element={<Benefits />}
+          element={<LazyPage component={Benefits} />}
         />
 
         <Route
           path="/resume-builder"
-          element={<ResumeBuilder />}
+          element={<LazyPage component={ResumeBuilder} />}
         />
         <Route
   path="/quiz-practice"
-  element={<QuizPractice />}
+  element={<LazyPage component={QuizPractice} />}
 />
 
-        <Route path="/skill-stats" element={<SkillStats />} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
-        <Route path="/friends" element={<Friends />} />
-        <Route path="/battles" element={<Battles />} />
-        <Route path="/battles/:id" element={<BattleRoom />} />
-        <Route path="/study-rooms" element={<StudyRooms />} />
-        <Route path="/study-rooms/:id" element={<StudyRoom />} />
+        <Route path="/skill-stats" element={<LazyPage component={SkillStats} />} />
+        <Route path="/leaderboard" element={<LazyPage component={Leaderboard} />} />
+        <Route path="/friends" element={<LazyPage component={Friends} />} />
+        <Route path="/battles" element={<LazyPage component={Battles} />} />
+        <Route path="/battles/:id" element={<LazyPage component={BattleRoom} />} />
+        <Route path="/study-rooms" element={<LazyPage component={StudyRooms} />} />
+        <Route path="/study-rooms/:id" element={<LazyPage component={StudyRoom} />} />
         <Route
           path="/profile"
-          element={<Profile />}
+          element={<LazyPage component={Profile} />}
         />
 
       </Route>
