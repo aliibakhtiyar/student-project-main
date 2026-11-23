@@ -1,9 +1,9 @@
 
-const client = require("../config/grok");
+const client = require("../config/groq");
 const QuizAttempt = require("../models/QuizAttempt");
 
 const MODEL =
-  process.env.GROK_CHAT_MODEL || "grok-4.7";
+  process.env.GROQ_CHAT_MODEL || "openai/gpt-oss-120b";
 
 const generateQuiz = async (req, res) => {
   try {
@@ -32,7 +32,9 @@ const generateQuiz = async (req, res) => {
     const response = await client.chat.completions.create({
       model: MODEL,
       temperature: 0.4,
-      max_completion_tokens: 5000,
+      reasoning_effort: "low",
+      response_format: { type: "json_object" },
+      max_completion_tokens: total === 15 ? 5200 : total === 10 ? 3600 : 2200,
       messages: [
         {
           role: "system",
@@ -60,6 +62,7 @@ Rules:
 - Questions must match the requested topic and difficulty.
 - Keep explanations factually accurate.
 - Do not include answers outside the JSON object.
+- Keep the question, options and explanation concise to fit the free API limits.
           `.trim(),
         },
         {
@@ -130,8 +133,13 @@ Rules:
   } catch (error) {
     console.error("Generate Quiz Error:", error.message);
 
-    return res.status(500).json({
-      message: "Could not generate quiz. Please try again.",
+    return res.status(
+      error.status >= 400 && error.status < 600 ? error.status : 502
+    ).json({
+      message: error.code
+        ? error.message
+        : "AI did not return a complete quiz. Try fewer questions or another topic.",
+      code: error.code || "AI_QUIZ_GENERATION_FAILED",
     });
   }
 };
