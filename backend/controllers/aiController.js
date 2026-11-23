@@ -1,5 +1,5 @@
 
-const client = require("../config/grok");
+const client = require("../config/groq");
 
 const SYSTEM_PROMPT = `
 You are UniSphere AI, the personal AI assistant for students.
