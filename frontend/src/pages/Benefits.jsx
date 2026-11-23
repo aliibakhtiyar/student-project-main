@@ -88,6 +88,7 @@ const BenefitCard = ({ benefit }) => {
                   src={image}
                   alt={title}
                   loading="lazy"
+                  decoding="async"
                   className="h-full w-full object-contain"
                   onError={(e) => {
                     e.currentTarget.style.display = "none";
