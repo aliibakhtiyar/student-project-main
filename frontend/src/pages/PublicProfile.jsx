@@ -295,6 +295,8 @@ function GitHubSection({
             {github.avatar_url ? (
               <img
                 src={github.avatar_url}
+                loading="lazy"
+                decoding="async"
                 alt={
                   github.login || "GitHub"
                 }
@@ -563,6 +565,8 @@ function LeetCodeSection({
             {leetcode.avatar ? (
               <img
                 src={leetcode.avatar}
+                loading="lazy"
+                decoding="async"
                 alt={
                   leetcode.username ||
                   "LeetCode"
@@ -783,6 +787,8 @@ function LinkedInSection({
                 {linkedin.picture ? (
                   <img
                     src={linkedin.picture}
+                  loading="lazy"
+                  decoding="async"
                     alt={
                       linkedin.name ||
                       "LinkedIn User"
