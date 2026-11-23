@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 
 const StatCard = ({
   title,
@@ -39,4 +41,4 @@ const StatCard = ({
   );
 };
 
-export default StatCard;
+export default memo(StatCard);
