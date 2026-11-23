@@ -128,7 +128,8 @@ const chatWithAI = async (req, res) => {
         : 500
     ).json({
       success: false,
-      message: "Unable to get AI response",
+      message: error.code ? error.message : "Unable to get AI response",
+      code: error.code || "AI_CHAT_FAILED",
       error:
         error?.error?.message ||
         error?.message ||
