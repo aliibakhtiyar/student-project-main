@@ -1,20 +1,20 @@
-const grok = require('../config/grok');
+const ai = require('../config/groq');
 const Battle = require('../models/Battle');
-const MODEL = process.env.GROK_CHAT_MODEL || 'grok-4.7';
+const MODEL = process.env.GROQ_CHAT_MODEL || 'openai/gpt-oss-120b';
 
-// Grok can spend completion tokens on reasoning. Retry only malformed/truncated
+// The free model can spend tokens on reasoning. Retry only malformed/truncated
 // outputs; never retry billing, auth, rate-limit or network failures automatically.
 function parseQuestionSet(raw, count) {
-  if (!raw || typeof raw !== 'string') throw new Error('Grok returned no questions');
+  if (!raw || typeof raw !== 'string') throw new Error('AI returned no questions');
   let data;
   try {
     data = JSON.parse(raw.trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, ''));
   } catch {
-    throw new Error('Grok returned text that was not valid question JSON');
+    throw new Error('AI returned text that was not valid question JSON');
   }
   const questions = data?.questions;
   if (!Array.isArray(questions) || questions.length !== count) {
-    throw new Error('Grok returned the wrong number of questions');
+    throw new Error('AI returned the wrong number of questions');
   }
   if (questions.some(q =>
     !q || typeof q.question !== 'string' || !q.question.trim() || q.question.length > 1000 ||
@@ -24,23 +24,24 @@ function parseQuestionSet(raw, count) {
     !Number.isInteger(q.correctAnswer) || q.correctAnswer < 0 || q.correctAnswer > 3 ||
     typeof q.explanation !== 'string'
   )) {
-    throw new Error('Grok returned questions with invalid options, answers or explanations');
+    throw new Error('AI returned invalid answer options or explanations');
   }
   return questions;
 }
 
 async function generateBattleQuestions({ topic, difficulty, count }) {
   const messages = [
-    { role: 'system', content: 'Generate accurate computer-science multiple-choice questions. Return only one valid JSON object with a "questions" array. Each question must have question (string), options (array of exactly four distinct strings), correctAnswer (integer 0-3), and explanation (string). No Markdown. Exactly the requested count. Ensure only one option is correct. Keep questions and explanations brief.' },
+    { role: 'system', content: 'Generate accurate computer-science multiple-choice questions. Return only one valid JSON object with a "questions" array. Each question must have question (string), options (array of exactly four distinct strings), correctAnswer (integer 0-3), and explanation (string). No Markdown. Exactly the requested count. Ensure only one option is correct. Keep questions, options and explanations short to fit the free API limits.' },
     { role: 'user', content: JSON.stringify({ topic, difficulty, count }) },
   ];
   for (let attempt = 0; attempt < 2; attempt++) {
     // 10-question battles need more budget than 5-question battles.
-    const maxTokens = count === 10 ? 12000 : 7000;
-    const response = await grok.chat.completions.create({
+    const maxTokens = count === 10 ? 3800 : 2300;
+    const response = await ai.chat.completions.create({
       model: MODEL,
       max_completion_tokens: maxTokens,
-      // Response-format hints are omitted for maximum compatibility with Grok models.
+      reasoning_effort: 'low',
+      response_format: { type: 'json_object' },
       messages: attempt === 0 ? messages : [
         ...messages,
         { role: 'user', content: 'Your previous response could not be validated. Return strict JSON with exactly the specified number of complete questions. Do not add any other text.' },
@@ -55,9 +56,9 @@ async function generateBattleQuestions({ topic, difficulty, count }) {
         finishReason: response.choices?.[0]?.finish_reason || null,
       });
       if (attempt === 1) {
-        const failure = new Error('Grok could not generate a complete valid question set. Try 5 questions or a simpler topic.');
+        const failure = new Error('AI could not generate a complete question set. Try 5 questions or a simpler topic.');
         failure.status = 502;
-        failure.code = 'GROK_INVALID_QUESTIONS';
+        failure.code = 'AI_INVALID_QUESTIONS';
         throw failure;
       }
     }
