@@ -207,6 +207,7 @@ const AIAssistant = () => {
           id: generateId(),
           role: "assistant",
           content:
+            error.response?.data?.message ||
             error.message ||
             "Sorry, something went wrong. Please try again.",
           error: true,
