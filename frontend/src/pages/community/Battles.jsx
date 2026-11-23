@@ -33,7 +33,7 @@ export default function Battles() {
   const accept = async (id, type) => { setBusy(true); try { await api.post(`/battles/${id}/${type}`); await load(); if (type==='accept') navigate(`/battles/${id}`); }
     catch(e) { toast.error(e.response?.data?.message || 'Could not update invitation'); } finally {setBusy(false);} };
   return <div className="mx-auto max-w-6xl text-white">
-    <Header title="Friend vs Friend" description="Invite an accepted friend to the same timed, Grok-generated question set. Scores are checked on the server and answers stay hidden until the match finishes." action={<span className="text-xs text-slate-500">{connected ? '● Live connected':'○ Reconnecting / refresh supported'}</span>}/>
+    <Header title="Friend vs Friend" description="Invite an accepted friend to the same timed, AI-generated question set. Scores are checked on the server and answers stay hidden until the match finishes." action={<span className="text-xs text-slate-500">{connected ? '● Live connected':'○ Reconnecting / refresh supported'}</span>}/>
     <ErrorBox message={error}/>
     <div className="grid gap-5 lg:grid-cols-3">
       <section className={`${panel} lg:col-span-1`}><h2 className="mb-4 flex items-center gap-2 font-bold"><Swords className="text-indigo-400" size={20}/> Create battle</h2>
